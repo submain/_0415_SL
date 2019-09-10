@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+      .layui-table{
+          width: 1226px;
+          border:1px red solid;
+          margin: 0 auto;
+          text-align:center;
+      }
+      .title{
+          width: 1226px;
+          height: 30px;
+          margin: 0 auto;
+          text-align: center;
+          font-weight: bold;
+          font-size: 20px;
+      }
+      .layui-input-block{
+            width: 80px;
+        }
+      .middle{
+          width: 1226px;
+          margin: 0 auto;
+
+      }
+      #test1{
+
+      }
+    .pageContent{
+        margin: 0 auto;
+        width: 1226px;
+        text-align: center;
+    }
+    .middle span{
+        width: 50px;
+        height: 30px;
+        background-color: #01AAED;
+        display: inline-block;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    </style>
+</head>
+<body>
+<div class="title">
+    <p>用户管理</p>
+</div>
+<div class="middle">
+    <span id="add">新增</span>
+    <span>修改</span>
+    <span>删除</span>
+<input type="text" placeholder="请输入关键词查找" style="height: 30px;">
+    <div style="width: 60px;height: 30px;background-color: #b2b2b2;display: inline-block;margin-top: -10px;text-align: center;line-height: 30px;cursor: pointer">查找</div>
+</div>
+
+<table class="layui-table">
+    <thead style="text-align: center;font-weight: bold;">
+    <tr>
+        <td style="background-color: #01AAED">选择</td>
+        <td style="background-color: #01AAED">用户名</td>
+        <td style="background-color: #01AAED">角色</td>
+        <td style="background-color: #01AAED">会员类型</td>
+        <td style="background-color: #01AAED">推荐人用户名</td>
+        <td style="background-color: #01AAED">状态（启用/禁用）</td>
+        <td style="background-color: #01AAED">最后修改时间</td>
+    </tr>
+    </thead>
+    <tbody class="my_t_body" id="my_t_body">
+    <tr>
+        <td><a href="">东城区</a></td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+        <td>贤心</td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+        <td>人生就像是一场修行</td>
+    </tr>
+    <tr>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+        <td>于千万人之中遇见你</td>
+    </tr>
+
+    </tbody>
+</table>
+<div class="pageContent"><div id="test1"></div></div>
+<div id="addframe" style="display:none;">
+    <form action="">
+
+    </form>
+</div>
+
+
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+
+    var pageSize = 2
+    var page =1
+    var areaNum=0;
+    //获取下拉选框的值
+
+
+   $("#search").click(function () {
+       // alert($("#select_area").val())
+      areaNum = $("#select_area").val()
+       ajaxGetAirQuiltyByPage()
+   })
+
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+    function renderPageContainer(count){
+    layui.use('laypage', function(){
+        var laypage = layui.laypage;
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+            ,count: count //数据总数，从服务端得到
+            , limit: pageSize
+            , curr: page
+            , limits: [2,4]
+            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+            , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+
+                //首次不执行
+                if (!first) {
+
+                    //把分页值，和分页量（分页量可能会变化）
+                    page = obj.curr;
+                    pageSize = obj.limit;
+
+                    ajaxGetAirQuiltyByPage()
+                }
+            }
+        });
+    });
+    }
+    ajaxGetAirQuiltyByPage()
+    function ajaxGetAirQuiltyByPage() {
+
+         $.ajax({
+             url:"getUserList",
+             data:{"page":page,"pageSize":pageSize},
+             datatype:"json",
+             type:"get",
+             success:function (json) {
+                  console.log(json)
+                 renderPageContainer(json.count)
+                 renderAjaxTable(json.data)
+                 if (json.success==404){
+                     $("#my_t_body").html("")
+                     var html =`
+             <tr>
+                    <td colspan="6">抱歉！暂无数据</td>
+
+                </tr>`
+                     $("#my_t_body").append(html)
+                 }
+             },
+             error:function () {
+
+             }
+         })
+    }
+    //渲染数据
+    function renderAjaxTable(data){
+        $("#my_t_body").html("")
+        $.each(data,function (index,eachobj) {
+           if (index % 2 ==0){
+               if (eachobj.isStart==1){
+                   var html=`<tr>
+        <td>${eachobj.id}</td>
+        <td>${eachobj.userName}</td>
+        <td>${eachobj.roleName}</td>
+        <td>${eachobj.userTypeName}</td>
+        <td>${eachobj.referCode}</td>
+        <td><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
+        <td>${eachobj.lastUpdateTime}</td>
+
+    </tr>`
+                   $("#my_t_body").append(html)
+                   $(".status").click(function () {
+                       var id = $(this).attr("id")
+                       if ($(this).is(':checked')){
+
+
+                           var status=1
+                           alert(status)
+                           console.log(status)
+                           madifyUserStatus(status,id)
+
+                       }else {
+
+                           var status=0
+                           console.log(status)
+                           madifyUserStatus(status,id)
+
+                       }
+
+                   })
+               }else {
+                   var html=`<tr>
+        <td>${eachobj.id}</td>
+        <td>${eachobj.userName}</td>
+        <td>${eachobj.roleName}</td>
+        <td>${eachobj.userTypeName}</td>
+        <td>${eachobj.referCode}</td>
+        <td><input type="checkbox" id="${eachobj.id}" class="status"></td>
+        <td>${eachobj.lastUpdateTime}</td>
+
+    </tr>`
+                   $("#my_t_body").append(html)
+                   $(".status").click(function () {
+                       var id = $(this).attr("id")
+                       if ($(this).is(':checked')){
+                           var status=1
+                           madifyUserStatus(status,id)
+                       }else {
+                           var status=0
+
+                           madifyUserStatus(status,id)
+                       }
+
+                   })
+               }
+
+           } else {
+               if (eachobj.isStart == 1) {
+                   var html = `<tr>
+        <td style="background-color: #9FDEAD">${eachobj.id}</td>
+        <td style="background-color: #9FDEAD">${eachobj.userName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.referCode}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
+        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+    </tr>`
+                   $("#my_t_body").append(html)
+                   $(".status").click(function () {
+                       var id = $(this).attr("id")
+                       if ($(this).is(':checked')){
+                           var status=1
+                           madifyUserStatus(status,id)
+                       }else {
+                           var status=0
+                           madifyUserStatus(status,id)
+
+                       }
+
+                   })
+               }else {
+                   var html = `<tr>
+        <td style="background-color: #9FDEAD">${eachobj.id}</td>
+        <td style="background-color: #9FDEAD">${eachobj.userName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.referCode}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" class="status"></td>
+        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+    </tr>`
+                   $("#my_t_body").append(html)
+                   $(".status").click(function () {
+                       var id = $(this).attr("id")
+                       if ($(this).is(':checked')){
+                           var status=1
+                       }else {
+                           var status=0
+                           madifyUserStatus(status,id)
+                       }
+
+                   })
+               }
+           }
+        })
+
+    }
+
+    //修改用户状态
+    function madifyUserStatus(status,id){
+        $.ajax({
+            url:"madifyUserStatus",
+            data:{"status":status,"id":id},
+            datatype:"json",
+            type:"get",
+            success:function (json) { // console.log(json)
+
+            },
+            error:function () {
+
+            }
+    })
+    }
+
+    //修改
+    layui.use('layer', function(){
+        var layer = layui.layer;
+        $("#add").click(function () {
+            layer.open({
+                type: 1,
+                area:['800px','600px'],
+                content: $('#addframe') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            })
+        })
+        
+    });
+
+
+</script>
+</html>

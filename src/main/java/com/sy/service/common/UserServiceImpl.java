@@ -2,6 +2,7 @@ package com.sy.service.common;
 
 import com.sy.mapper.common.UserMapper;
 import com.sy.model.common.User;
+import com.sy.model.resp.BaseResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -75,5 +76,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public int loginCodeIsExit(User user) throws Exception {
         return mapper.loginCodeIsExit(user);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    public BaseResp modifyUserStatus(Integer status, Integer id) throws Exception {
+        BaseResp baseResp = new BaseResp();
+        Integer result = mapper.madifyUserStatus(status,id);
+        if (result!=0){
+            baseResp.setSuccess(1);
+        }else {
+            baseResp.setSuccess(0);
+        }
+        return baseResp;
     }
 }

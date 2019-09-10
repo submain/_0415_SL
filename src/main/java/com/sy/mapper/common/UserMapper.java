@@ -2,6 +2,8 @@ package com.sy.mapper.common;
 
 
 import com.sy.model.common.User;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -84,4 +86,13 @@ public interface UserMapper {
      * @throws Exception
      */
     public int loginCodeIsExit(User user) throws Exception;
+
+    /**
+     * 修改用户状态
+     * @param status
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public Integer madifyUserStatus(@Param("status") Integer status,@Param("id") Integer id) throws Exception;
 }

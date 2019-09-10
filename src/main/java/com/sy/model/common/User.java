@@ -1,5 +1,7 @@
 package com.sy.model.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,6 +31,7 @@ public class User implements Serializable {
     private String userType;
     private String userTypeName;
     private Integer isStart;
+    @JsonFormat(pattern ="yyyy-MM-dd ")
     private Date lastUpdateTime;
     private Date lastLoginTime;
     private String bankName;
@@ -36,6 +39,24 @@ public class User implements Serializable {
     private String bankAccount;
     private String idCardPicPath;
     private String bankPicPath;
+    private Integer pageSize;
+    private Integer starNum;
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getStarNum() {
+        return starNum;
+    }
+
+    public void setStarNum(Integer starNum) {
+        this.starNum = starNum;
+    }
 
     public Integer getId() {
         return id;

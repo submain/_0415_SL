@@ -188,5 +188,9 @@
 			</if>
 		</trim>
 	</select>
+
+	<update id="madifyUserStatus">
+		update au_user set isstart = #{status} where id=#{id}
+	</update>
 	
 </mapper>  

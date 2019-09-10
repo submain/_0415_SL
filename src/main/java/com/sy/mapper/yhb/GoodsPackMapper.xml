@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sy.mapper.yhb.GoodsPackMapper">
+	
+    <!-- 分页 按条件搜索 -->
+     <select id="getGoodsPackListBySearch" resultType="GoodsPack" parameterType="GoodsPack">
+		select * from goods_pack
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="goodsPackName != null">
+			 and goodsPackName like  CONCAT('%',#{goodsPackName},'%')
+			</if>
+		 </trim>
+		 order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+
+	<select id="getGoodsPackList" resultType="GoodsPack" parameterType="GoodsPack">
+		select * from goods_pack  order by createTime desc limit #{starNum},#{pageSize}
+	</select>
+
+	<!--分页:按条件查询商品记录数-->
+	<select id="count" resultType="int" parameterType="GoodsPack">
+		select count(1) from goods_pack
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="goodsPackName != null">
+				and goodsPackName like  CONCAT('%',#{goodsPackName},'%')
+			</if>
+
+		</trim>
+	</select>
+
+	<select id="countAll" resultType="int">
+		select count(*) from goods_pack
+	</select>
+
+
+	
+
+
+	<!-- 根据主键查询商品 -->
+	<select id="getGoodsPackById" resultType="GoodsPack" parameterType="GoodsPack">
+		select * from goods_info where id = #{id}
+    </select>
+    
+    <!-- 增加商品 -->
+	<insert id="addGoodsPack" parameterType="GoodsPack">
+		insert into goods_pack (goodsPackName,goodsPackCode,typeId,typeName,totalPrice,state,note)
+		values (#{goodsPackName},
+		  #{goodsPackCode},#{typeId},#{typeName},#{totalPrice},#{state},#{note}
+		)
+	</insert>
+    
+    <!-- 根据Id删除商品 -->
+	<delete id="deleteGoodsPackById" parameterType="GoodsPack">
+		delete from goods_pack where id = #{id}
+	</delete>
+    
+    
+    <!-- 修改商品-->
+	<update id="modifyGoodsPack" parameterType="GoodsPack">
+		update goods_pack set goodsPackName=#{goodsPackName},goodsPackCode=#{goodsPackCode},typeName=#{typeName},
+		totalPrice=#{totalPrice},state=#{state},note=#{note} where id=#{id}
+	</update>
+
+	
+</mapper>  

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sy.mapper.yhb.Data_dictionaryMapper">
+
+
+	<select id="getData_dictionaryList" resultType="Data_dictionary" parameterType="Data_dictionary">
+		select * from data_dictionary limit #{starNum},#{pageSize}
+	</select>
+
+
+	<select id="countAll" resultType="int">
+		select count(*) from data_dictionary
+	</select>
+
+
+	
+
+
+
+    
+    <!-- 增加商品 -->
+	<insert id="addData_dictionary" parameterType="Data_dictionary">
+		insert into data_dictionary(typeCode,typeName,valueId,valueName) values (#{typeCode},
+		  #{typeName},#{valueId},#{valueName}
+		)
+	</insert>
+    
+    <!-- 根据Id删除商品 -->
+	<delete id=" deleteData_dictionaryById">
+		delete from data_dictionary where id = #{id}
+	</delete>
+    
+    
+    <!-- 修改商品-->
+	<update id="modifyData_dictionary" parameterType="Data_dictionary">
+		update data_dictionary set typeCode=#{typeCode},typeName=#{typeName},valueId=#{valueId},
+		valueName=#{valueName} where id=#{id}
+	</update>
+
+
+	
+</mapper>  

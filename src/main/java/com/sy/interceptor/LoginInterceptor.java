@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 对用户想访问的url进行拦截
  */
+//修改
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired

@@ -2,6 +2,7 @@ package com.sy.service.common;
 
 
 import com.sy.model.common.User;
+import com.sy.model.resp.BaseResp;
 
 import java.util.List;
 
@@ -85,4 +86,5 @@ public interface UserService {
      * @throws Exception
      */
     public int loginCodeIsExit(User user) throws Exception;
+    public BaseResp modifyUserStatus(Integer status,Integer id) throws Exception;
 }
