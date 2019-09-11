@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .content{
+            margin: 0 auto;
+            width: 1226px;
+        }
+        .delete{
+            width: 40px;
+            background-color:darkkhaki;
+            border-radius: 5px;
+
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <h1>购物车</h1>
+    <hr color="red">
+
+    <table class="layui-table">
+        <thead style="text-align: center;font-weight: bold;text-align: center">
+        <tr>
+            <td style="background-color: #01AAED">套餐标题</td>
+            <td style="background-color: #01AAED">零售价（元）</td>
+            <td style="background-color: #01AAED">优惠价（元）</td>
+            <td style="background-color: #01AAED">数量</td>
+            <td style="background-color: #01AAED">总价</td>
+            <td style="background-color: #01AAED">操作</td>
+        </tr>
+        </thead>
+        <tbody class="my_t_body" id="my_t_body" style="text-align: center">
+        <tr>
+            <td><input type="checkbox"  checked class="status"></td>
+            <td>2131元</td>
+            <td>2131元</td>
+            <td><input type="text" style="width: 25px;height: 25px"></td>
+            <<td>2131元</td>
+            <td><button class="delete">删除</button></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"  checked class="status"></td>
+            <td>2131元</td>
+            <td>2131元</td>
+            <td><input type="text" style="width: 25px;height: 25px"></td>
+            <td>2131元</td>
+            <td><button class="delete">删除</button></td>
+
+
+        </tr>
+
+        </tbody>
+    </table>
+
+    <div class="buttom">
+        <p style="float: right">总价:31313元</p>
+        <div><button style="float: right;clear: both;width: 80px;height: 30px;margin-top: 10px;background-color: orange;color: white" id="settle_accounts">去结算</button></div>
+
+    </div>
+</div>
+
+</body>
+<script>
+    $("#settle_accounts").click(function () {
+        window.location.href="Settle_Accounts.html"
+    })
+</script>
+</html>

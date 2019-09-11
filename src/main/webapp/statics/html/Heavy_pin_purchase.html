@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>用户管理</title>
+    <title>重销购货</title>
     <script src="../jquery/jquery.js"></script>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <style>
@@ -33,9 +33,7 @@
 
         }
 
-        #test1 {
 
-        }
 
         .pageContent {
             margin: 0 auto;
@@ -44,39 +42,42 @@
         }
 
         .middle span {
-            width: 50px;
+            /*width: 50px;*/
             height: 30px;
             background-color: #01AAED;
             display: inline-block;
             text-align: center;
             line-height: 30px;
+            margin: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .buttom{
+            margin: 20px auto;
+            width: 1226px;
+            text-align: right;
+        }
+        .buttom button{
+
+            background-color: #00FFFF;
+            color: red;
+            border: 1px solid slateblue;
+            border-radius: 5px;
+            padding: 4px;
+            cursor: pointer;
         }
 
-        .layui-form-item {
-            display: inline-block;
-        }
 
-        #addframe {
-            width: 600px;
-            height: 600px;
-            /*border: 1px red solid;*/
-        }
-
-        .layui-input-block{
-            width: 150px;
-        }
 
     </style>
 </head>
 <body>
 <div class="title">
-    <p>用户管理</p>
+    <p>重销购货</p>
 </div>
 <div class="middle">
-    <span id="add">新增</span>
-    <span>修改</span>
-    <span>删除</span>
-    <input type="text" placeholder="请输入关键词查找" style="height: 30px;">
+    <span>编号</span><input type="text" placeholder="请输入编号查找" style="height: 30px;">
+    <span>套餐标题</span><input type="text" placeholder="请输入套餐标题查找" style="height: 30px;">
     <div style="width: 60px;height: 30px;background-color: #b2b2b2;display: inline-block;margin-top: -10px;text-align: center;line-height: 30px;cursor: pointer">
         查找
     </div>
@@ -86,32 +87,31 @@
     <thead style="text-align: center;font-weight: bold;">
     <tr>
         <td style="background-color: #01AAED">选择</td>
-        <td style="background-color: #01AAED">用户名</td>
-        <td style="background-color: #01AAED">角色</td>
-        <td style="background-color: #01AAED">会员类型</td>
-        <td style="background-color: #01AAED">推荐人用户名</td>
-        <td style="background-color: #01AAED">状态（启用/禁用）</td>
-        <td style="background-color: #01AAED">最后修改时间</td>
+        <td style="background-color: #01AAED">产品编号</td>
+        <td style="background-color: #01AAED">产品名称</td>
+        <td style="background-color: #01AAED">说明</td>
+        <td style="background-color: #01AAED">售价（元）</td>
+        <td style="background-color: #01AAED">数量</td>
     </tr>
     </thead>
     <tbody class="my_t_body" id="my_t_body">
     <tr>
-        <td><a href="">东城区</a></td>
+        <td><input type="checkbox"  checked class="status"></td>
         <td>2016-11-29</td>
         <td>人生就像是一场修行</td>
         <td>贤心</td>
-        <td>2016-11-29</td>
-        <td>人生就像是一场修行</td>
-        <td>人生就像是一场修行</td>
+        <td>2131元</td>
+        <td><input type="text" style="width: 25px;height: 25px"></td>
+
     </tr>
     <tr>
-        <td>许闲心</td>
+        <td><input type="checkbox"  checked class="status"></td>
         <td>2016-11-28</td>
         <td>于千万人之中遇见你</td>
         <td>许闲心</td>
-        <td>2016-11-28</td>
-        <td>于千万人之中遇见你</td>
-        <td>于千万人之中遇见你</td>
+        <td>2131元</td>
+        <td><input type="text" style="width: 25px;height: 25px"></td>
+
     </tr>
 
     </tbody>
@@ -119,93 +119,11 @@
 <div class="pageContent">
     <div id="test1"></div>
 </div>
-<div id="addframe" style="display: none">
-    <form action="" class="layui-form">
-        <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
-            <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">会员</option>
-                    <option value="1">管理员</option>
-                </select>
-            </div>
 
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">会员类型</label>
-            <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">注册会员</option>
-                    <option value="1">消费会员</option>
-                    <option value="1">vip会员</option>
-                    <option value="1">加盟店</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">证件类型</label>
-            <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">二代身份证</option>
-                    <option value="1">护照</option>
-                    <option value="1">军证官</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">证件号码</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">移动电话</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮政编码</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">收货地址</label>
-            <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="width: 413px"></textarea>
-            </div>
-        </div>
+<div class="buttom">
+    <button id="settle_accounts">去结算</button>
+   <button id="addIntoShopping">加入购物车</button>
 
-        <button type="button" class="layui-btn" id="test3" style="margin-top:30px;margin-left: -227px">
-            <i class="layui-icon">&#xe67c;</i>上传身份证图片
-        </button>
-        <button type="button" class="layui-btn" id="test4" style="margin-top:30px;margin-left: 0px">
-            <i class="layui-icon">&#xe67c;</i>上传银行卡图片
-        </button>
-
-        <div class="layui-form-item" style="margin-left: 200px">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
-            </div>
-        </div>
-    </form>
 </div>
 
 
@@ -216,35 +134,16 @@
     var pageSize = 2
     var page = 1
     var areaNum = 0;
+    //去结算
+    $("#settle_accounts").click(function () {
+        window.location.href="Settle_Accounts.html"
+    })
+    //加入购物车
+    $("#addIntoShopping").click(function () {
+        window.location.href="shopping.html"
+    })
+
     //获取下拉选框的值
-
-    layui.use('upload', function(){
-        var upload = layui.upload;
-
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test3' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test4' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-    });
-
 
     $("#search").click(function () {
         // alert($("#select_area").val())
@@ -431,41 +330,8 @@
 
     }
 
-    //修改用户状态
-    function madifyUserStatus(status, id) {
-        $.ajax({
-            url: "madifyUserStatus",
-            data: {"status": status, "id": id},
-            datatype: "json",
-            type: "get",
-            success: function (json) { // console.log(json)
 
-            },
-            error: function () {
 
-            }
-        })
-    }
-
-    //修改
-    layui.use('layer', function () {
-        var layer = layui.layer;
-        $("#add").click(function () {
-            layer.open({
-                type: 1,
-                area: ['600px', '600px'],
-                content: $('#addframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-                cancel: function(index, layero){
-                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
-                        layer.close(index)
-                        $("#addframe").css("display","none")
-                    }
-                    return false;
-                }
-            })
-        })
-
-    });
 
 
 </script>

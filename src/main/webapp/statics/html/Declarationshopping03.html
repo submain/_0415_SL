@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .content{
+            width: 1226px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 40px;
+        }
+        .next{
+            background-color: #00FFFF;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            color: red;
+            margin-left: 720px;
+            cursor: pointer;
+            margin-top: 20px;
+            clear: both;
+        }
+        .next a{
+            text-decoration: none;
+        }
+        .consumer_level{
+            display: inline-block;
+            margin: 20px;
+        }
+        #informationframe p{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <P>当前余额：<span style="color:red;">3880元</span><span style="margin-left: 20px"><a href="">余额不足，马上去汇款充值</a></span></P>
+    <div>报单购货会员用户名：<input style="width: 200px;height: 20px"></div>
+
+
+    <P style="float: left;margin-left: 200px">以下报单级别必须选择其一：</P>
+    <div style="clear: both;">
+        <div class="consumer_level">
+            <P><input type="radio" name="cousumer_level">消费会员：</P>
+            <P>消费金额：4600元</P>
+            <P>PV：300</P>
+            <P>综合服务费：690元</P>
+        </div>
+        <div class="consumer_level">
+            <P><input type="radio" name="cousumer_level">VIP会员：</P>
+            <P>消费金额：14600元</P>
+            <P>PV：900</P>
+            <P>综合服务费：1500元</P>
+        </div>
+        <div class="consumer_level">
+            <P><input type="radio" name="cousumer_level">加盟店：</P>
+            <P>消费金额：28800元</P>
+            <P>PV：1500</P>
+            <P>综合服务费：2800元</P>
+        </div>
+    </div>
+    <div style="float: left;margin-left: 200px">
+        <P>收货地址：<span>中国中关村大街112号</span></P>
+        <P>快递类型：<span>EMS</span></P>
+        <P>邮编：<span>01010</span></P>
+    </div>
+    <div class="next" id="next">好的继续</div>
+
+</div>
+<div id="informationframe" style="display: none">
+    <P>报单购货会员用户名:<span>sl_user03</span></P>
+    <P>收货国家（地区）<span>中国</span></P>
+    <P>报单級別：<span>消費会员（消费金额：4600元、PV :300、综合服务费： 690元)</span></P>
+    <P>总计金额:<span>5290</span>元</P>
+    <P>收货地址：<span>中国 中关村大街112号</span></P>
+    <P>邮编：<span>01010</span></P>
+    <P>快递类型：<span>EMS</span></P>
+    <P>二级密码：<input type="text"></P>
+    <P><span style="margin-left: 0px"><a href="" style="color:red;">余额不足，马上去汇款充值</a></span></P>
+    <!--<div>-->
+        <!--<button>确认</button>-->
+        <!--<button id="cancel">取消</button>-->
+    <!--</div>-->
+
+</div>
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        $("#next").click(function () {
+
+            layer.open({
+                title:"确认报单购货信息",
+                type: 1,
+                area: ['600px', '600px'],
+                content: $('#informationframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                btn:["确定","取消"],
+                yes: function(){
+                    $("#informationframe").css("display","none")
+                    // confirm('确定？');
+                    layer.closeAll('dialog');
+                    //验证二级密码
+                    var a=1
+                    if (a==1){
+                        if (confirm("报单购货成功，马上去激活？")) {
+                            location.href="ConfirmActivation.html"
+                        }else {
+                            location.href=location.href
+                        }
+                    } else {
+                        alert("二级密码不正确")
+                        location.href=location.href
+                    }
+
+
+
+                },
+                btn2:function(){
+                    $("#informationframe").css("display","none")
+                    // alert('您已点击取消')
+
+
+
+                },
+                cancel: function(index, layero){
+                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        layer.close(index)
+                        $("#informationframe").css("display","none")
+                    }
+                    return false;
+                }
+
+            })
+            /**
+             * 关闭当前弹出层
+             */
+
+
+
+
+        })
+
+    });
+</script>
+</html>

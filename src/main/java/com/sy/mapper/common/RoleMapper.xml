@@ -52,5 +52,9 @@
 	<delete id ="deleteRole" parameterType="role">
 		delete from au_role where id = #{id}
 	</delete>
+
+	<update id="madifyRoleStatus">
+		update au_role set isstart = #{status} where id=#{id}
+	</update>
 </mapper>  
 

@@ -3,6 +3,7 @@ package com.sy.service.common;
 
 import com.sy.mapper.common.RoleMapper;
 import com.sy.model.common.Role;
+import com.sy.model.resp.BaseResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -36,6 +37,18 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getRoleIdAndNameList() throws Exception {
         return roleMapper.getRoleIdAndNameList();
+    }
+    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    @Override
+    public BaseResp modifyUserStatus(Integer status, Integer id) throws Exception {
+        BaseResp baseResp = new BaseResp();
+        Integer result = roleMapper.madifyRoleStatus(status,id);
+        if (result!=0){
+            baseResp.setSuccess(1);
+        }else {
+            baseResp.setSuccess(0);
+        }
+        return baseResp;
     }
 
     @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)

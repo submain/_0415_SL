@@ -27,4 +27,13 @@ public class RoleServiceImplTest {
         role.setCreatedBy("admin");
         System.out.println(roleService.addRole(role));
     }
+
+    @Test
+    public void getRoleList() {
+        try {
+            System.out.println(roleService.getRoleList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.sy.service.common;
 
 import com.sy.model.common.Role;
+import com.sy.model.resp.BaseResp;
 
 import java.util.List;
 
@@ -54,4 +55,9 @@ public interface RoleService {
      * @return
      */
     public List<Role> getRoleIdAndNameList() throws Exception;
+    /**
+     * 修改角色状态
+     * @return
+     */
+    public BaseResp modifyUserStatus(Integer status, Integer id) throws Exception;
 }

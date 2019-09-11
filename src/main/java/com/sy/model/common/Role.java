@@ -1,5 +1,7 @@
 package com.sy.model.common;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -11,6 +13,7 @@ public class Role {
     private String roleCode;
     private String roleName;
     private Integer isStart;
+    @JsonFormat(pattern ="yyyy-MM-dd")
     private Date createDate;
     private String createdBy;
 

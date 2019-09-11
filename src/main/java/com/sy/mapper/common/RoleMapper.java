@@ -2,6 +2,7 @@ package com.sy.mapper.common;
 
 
 import com.sy.model.common.Role;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -56,4 +57,13 @@ public interface RoleMapper {
 	 * @return
 	 */
 	public List<Role> getRoleIdAndNameList() throws Exception;
+	/**
+	 * 修改角色状态
+	 * @param status
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer madifyRoleStatus(@Param("status") Integer status, @Param("id") Integer id) throws Exception;
+
 }

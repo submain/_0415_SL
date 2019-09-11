@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>用户管理</title>
+    <title>角色管理</title>
     <script src="../jquery/jquery.js"></script>
     <link rel="stylesheet" href="../layui/css/layui.css">
     <style>
@@ -70,26 +70,22 @@
 </head>
 <body>
 <div class="title">
-    <p>用户管理</p>
+    <p>角色管理</p>
 </div>
 <div class="middle">
     <span id="add">新增</span>
     <span>修改</span>
-    <span>删除</span>
-    <input type="text" placeholder="请输入关键词查找" style="height: 30px;">
-    <div style="width: 60px;height: 30px;background-color: #b2b2b2;display: inline-block;margin-top: -10px;text-align: center;line-height: 30px;cursor: pointer">
-        查找
-    </div>
+    <span id="deleteRole">删除</span>
+
 </div>
 
 <table class="layui-table">
     <thead style="text-align: center;font-weight: bold;">
     <tr>
         <td style="background-color: #01AAED">选择</td>
-        <td style="background-color: #01AAED">用户名</td>
-        <td style="background-color: #01AAED">角色</td>
-        <td style="background-color: #01AAED">会员类型</td>
-        <td style="background-color: #01AAED">推荐人用户名</td>
+        <td style="background-color: #01AAED">角色编号</td>
+        <td style="background-color: #01AAED">角色名称</td>
+        <td style="background-color: #01AAED">创建人</td>
         <td style="background-color: #01AAED">状态（启用/禁用）</td>
         <td style="background-color: #01AAED">最后修改时间</td>
     </tr>
@@ -102,7 +98,6 @@
         <td>贤心</td>
         <td>2016-11-29</td>
         <td>人生就像是一场修行</td>
-        <td>人生就像是一场修行</td>
     </tr>
     <tr>
         <td>许闲心</td>
@@ -110,7 +105,6 @@
         <td>于千万人之中遇见你</td>
         <td>许闲心</td>
         <td>2016-11-28</td>
-        <td>于千万人之中遇见你</td>
         <td>于千万人之中遇见你</td>
     </tr>
 
@@ -212,112 +206,18 @@
 </body>
 <script src="../layui/layui.all.js"></script>
 <script>
+    $.ajax({
+        url:"getRoleList",
+        datatype: "json",
+        type: "get",
+        success: function (json) {
+            console.log(json)
+            renderAjaxTable(json.data)
+        },
+        error:function () {
 
-    var pageSize = 2
-    var page = 1
-    var areaNum = 0;
-    //获取下拉选框的值
-
-    layui.use('upload', function(){
-        var upload = layui.upload;
-
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test3' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-        //执行实例
-        var uploadInst = upload.render({
-            elem: '#test4' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-    });
-
-
-    $("#search").click(function () {
-        // alert($("#select_area").val())
-        areaNum = $("#select_area").val()
-        ajaxGetAirQuiltyByPage()
+        }
     })
-
-    layui.use('form', function () {
-        var form = layui.form;
-
-        //各种基于事件的操作，下面会有进一步介绍
-    });
-
-    function renderPageContainer(count) {
-        layui.use('laypage', function () {
-            var laypage = layui.laypage;
-
-            //执行一个laypage实例
-            laypage.render({
-                elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
-                , count: count //数据总数，从服务端得到
-                , limit: pageSize
-                , curr: page
-                , limits: [2, 4]
-                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
-                , jump: function (obj, first) {
-                    //obj包含了当前分页的所有参数，比如：
-                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-                    console.log(obj.limit); //得到每页显示的条数
-
-                    //首次不执行
-                    if (!first) {
-
-                        //把分页值，和分页量（分页量可能会变化）
-                        page = obj.curr;
-                        pageSize = obj.limit;
-
-                        ajaxGetAirQuiltyByPage()
-                    }
-                }
-            });
-        });
-    }
-
-    ajaxGetAirQuiltyByPage()
-
-    function ajaxGetAirQuiltyByPage() {
-
-        $.ajax({
-            url: "getUserList",
-            data: {"page": page, "pageSize": pageSize},
-            datatype: "json",
-            type: "get",
-            success: function (json) {
-                console.log(json)
-                renderPageContainer(json.count)
-                renderAjaxTable(json.data)
-                if (json.success == 404) {
-                    $("#my_t_body").html("")
-                    var html = `
-             <tr>
-                    <td colspan="6">抱歉！暂无数据</td>
-
-                </tr>`
-                    $("#my_t_body").append(html)
-                }
-            },
-            error: function () {
-
-            }
-        })
-    }
-
     //渲染数据
     function renderAjaxTable(data) {
         $("#my_t_body").html("")
@@ -325,13 +225,12 @@
             if (index % 2 == 0) {
                 if (eachobj.isStart == 1) {
                     var html = `<tr>
-        <td>${eachobj.id}</td>
-        <td>${eachobj.userName}</td>
+        <td><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td>${eachobj.roleCode}</td>
         <td>${eachobj.roleName}</td>
-        <td>${eachobj.userTypeName}</td>
-        <td>${eachobj.referCode}</td>
+        <td>${eachobj.createdBy}</td>
         <td><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
-        <td>${eachobj.lastUpdateTime}</td>
+        <td>${eachobj.createDate}</td>
 
     </tr>`
                     $("#my_t_body").append(html)
@@ -356,13 +255,12 @@
                     })
                 } else {
                     var html = `<tr>
-        <td>${eachobj.id}</td>
-        <td>${eachobj.userName}</td>
+         <td><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td>${eachobj.roleCode}</td>
         <td>${eachobj.roleName}</td>
-        <td>${eachobj.userTypeName}</td>
-        <td>${eachobj.referCode}</td>
+        <td>${eachobj.createdBy}</td>
         <td><input type="checkbox" id="${eachobj.id}" class="status"></td>
-        <td>${eachobj.lastUpdateTime}</td>
+         <td>${eachobj.createDate}</td>
 
     </tr>`
                     $("#my_t_body").append(html)
@@ -383,13 +281,12 @@
             } else {
                 if (eachobj.isStart == 1) {
                     var html = `<tr>
-        <td style="background-color: #9FDEAD">${eachobj.id}</td>
-        <td style="background-color: #9FDEAD">${eachobj.userName}</td>
+       <td style="background-color: #9FDEAD"><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td style="background-color: #9FDEAD">${eachobj.roleCode}</td>
         <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
-        <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
-        <td style="background-color: #9FDEAD">${eachobj.referCode}</td>
+        <td style="background-color: #9FDEAD">${eachobj.createdBy}</td>
         <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
-        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+          <td style="background-color: #9FDEAD">${eachobj.createDate}</td>
     </tr>`
                     $("#my_t_body").append(html)
                     $(".status").click(function () {
@@ -406,13 +303,12 @@
                     })
                 } else {
                     var html = `<tr>
-        <td style="background-color: #9FDEAD">${eachobj.id}</td>
-        <td style="background-color: #9FDEAD">${eachobj.userName}</td>
+       <td style="background-color: #9FDEAD"><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td style="background-color: #9FDEAD">${eachobj.roleCode}</td>
         <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
-        <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
-        <td style="background-color: #9FDEAD">${eachobj.referCode}</td>
+        <td style="background-color: #9FDEAD">${eachobj.createdBy}</td>
         <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" class="status"></td>
-        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+        <td style="background-color: #9FDEAD">${eachobj.createDate}</td>
     </tr>`
                     $("#my_t_body").append(html)
                     $(".status").click(function () {
@@ -431,14 +327,15 @@
 
     }
 
-    //修改用户状态
+    //修改角色状态
     function madifyUserStatus(status, id) {
         $.ajax({
-            url: "madifyUserStatus",
+            url: "madifyRoleStatus",
             data: {"status": status, "id": id},
             datatype: "json",
             type: "get",
-            success: function (json) { // console.log(json)
+            success: function (json) {
+                 console.log(json)
 
             },
             error: function () {
@@ -466,6 +363,41 @@
         })
 
     });
+
+
+    //删除操作
+    $("#deleteRole").click(function () {
+        //用来记录是否有选中数据
+        var isChose = 0
+        $(".deleteChose").each(function () {
+            var roleId=$(this).attr("roleId")
+            if ($(this).is(':checked')) {
+                isChose=1
+                if (confirm("确定要删除这条信息吗")){
+                    $.ajax({
+                        url: "DeleteRole",
+                        data: {"id": roleId},
+                        datatype: "json",
+                        type: "get",
+                        success: function (json) {
+                            console.log(json)
+
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+            }
+
+        })
+        if (isChose==0){
+            alert("请选择至少一项")
+        }else {
+            window.location.href=window.location.href
+        }
+
+    })
 
 
 </script>

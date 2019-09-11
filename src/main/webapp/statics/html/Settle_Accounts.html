@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算页面</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .content{
+            margin: 0 auto;
+            width: 1226px;
+        }
+        .content p {
+            margin: 10px;
+        }
+        .pay{
+            float: right;
+            margin-right: 100px;
+            width: 80px;
+            height: 30px;
+            background-color: orange;
+            border-radius: 5px;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<div class="content">
+    <h1>结算</h1>
+    <hr color="red">
+    <h3>订单明细</h3>
+    <hr color="red">
+    <p>单号：<span>sl_order01</span></p>
+    <p>购买会员用户名：<span>sl_order01</span></p>
+    <p>购买人姓名：<span>李四</span></p>
+    <p>购买类型：<span>报单购货（注释：还包括重消购货、辅消购货）</span></p>
+    <p>购买时间：<span>2013-12-1 17:11:08</span></p>
+    <h2>商品详情</h2>
+    <hr color="red">
+    <table class="layui-table">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>套餐标题</th>
+            <th>优惠价（元）</th>
+            <th>数量</th>
+            <th>总价</th>
+            <th>积分</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>重消套装（A)</td>
+            <td>4600</td>
+            <td>1</td>
+            <td>4600</td>
+            <td>460</td>
+        </tr>
+        <tr>
+            <td>重消套装（A)</td>
+            <td>4600</td>
+            <td>1</td>
+            <td>4600</td>
+            <td>460</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>当前余额：<span style="color: red;margin-right: 10px">40000元</span>
+        <a href="" style="color: #01AAED">余额不足，马上去汇款充值</a>
+        <span style="margin-left: 30px">总价：</span><span style="color:red;">2300元</span>
+        <span>积分：11500（PV）</span>
+    </p>
+    <hr>
+    <p>收货地址：<span>中关村</span></p>
+    <p>快递类型：<span>EMS</span></p>
+    <p>邮编：<span>010101</span></p>
+
+    <p><span style="color: orangered">请输入二级密码:</span><input type="text" style="margin-left: 20px"></p>
+    <button class="pay">支付</button>
+
+
+
+</div>
+</body>
+</html>
