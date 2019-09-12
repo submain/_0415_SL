@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -58,6 +59,48 @@ public class UserController {
         return "/backend/"+path;
     }
 
-    //新增用户
+    //增加用户
+    @RequestMapping("/statics/html/addUser")
+    @ResponseBody
+    public BaseResp addUser(User user){
+        //从session中获取到推荐人用户名
+        user.setLastUpdateTime(new Date());
+            BaseResp baseResp = new BaseResp();
+        try {
+            int i = userService.addUser(user);
+            if (i!=0){
+                baseResp.setSuccess(1);
+            }else {
+                baseResp.setSuccess(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            baseResp.setSuccess(0);
+        }
+        return baseResp;
+    }
+
+    //删除用户
+    @RequestMapping("/statics/html/deleteUser")
+    @ResponseBody
+    public BaseResp deleteUser(Integer id){
+        BaseResp baseResp = new BaseResp();
+        User user = new User();
+        user.setId(id);
+        try {
+            int i = userService.deleteUser(user);
+            if (i!=0){
+                baseResp.setSuccess(1);
+            }else {
+                baseResp.setSuccess(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            baseResp.setSuccess(0);
+        }
+        return baseResp;
+    }
+
+
 
 }

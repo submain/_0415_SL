@@ -50,6 +50,7 @@
             display: inline-block;
             text-align: center;
             line-height: 30px;
+            cursor: pointer;
         }
 
         .layui-form-item {
@@ -58,7 +59,7 @@
 
         #addframe {
             width: 600px;
-            height: 600px;
+            /*height: 600px;*/
             /*border: 1px red solid;*/
         }
 
@@ -75,7 +76,7 @@
 <div class="middle">
     <span id="add">新增</span>
     <span>修改</span>
-    <span>删除</span>
+    <span id="delete">删除</span>
     <input type="text" placeholder="请输入关键词查找" style="height: 30px;">
     <div style="width: 60px;height: 30px;background-color: #b2b2b2;display: inline-block;margin-top: -10px;text-align: center;line-height: 30px;cursor: pointer">
         查找
@@ -120,11 +121,11 @@
     <div id="test1"></div>
 </div>
 <div id="addframe" style="display: none">
-    <form action="" class="layui-form">
+    <form action="" class="layui-form" id="form1" >
         <div class="layui-form-item">
             <label class="layui-form-label">角色</label>
             <div class="layui-input-block">
-                <select name="city" lay-verify="required">
+                <select name="role" lay-verify="required" id="role">
                     <option value=""></option>
                     <option value="0">会员</option>
                     <option value="1">管理员</option>
@@ -135,73 +136,81 @@
         <div class="layui-form-item">
             <label class="layui-form-label">会员类型</label>
             <div class="layui-input-block">
-                <select name="city" lay-verify="required">
+                <select name="viptype" lay-verify="required" id="viptype">
                     <option value=""></option>
                     <option value="0">注册会员</option>
                     <option value="1">消费会员</option>
-                    <option value="1">vip会员</option>
-                    <option value="1">加盟店</option>
+                    <option value="2">vip会员</option>
+                    <option value="3">加盟店</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                <input type="text" name="username" id="username" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">姓名</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" name="name" id="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">证件类型</label>
             <div class="layui-input-block">
-                <select name="city" lay-verify="required">
+                <select name="cardtype" lay-verify="required" id="cardtype">
                     <option value=""></option>
                     <option value="0">二代身份证</option>
                     <option value="1">护照</option>
-                    <option value="1">军证官</option>
+                    <option value="2">军证官</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">证件号码</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" name="cardnum" id="cardnum" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">移动电话</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" name="phonenum" id="phonenum" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">邮政编码</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" name="email" id="email" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">收货地址</label>
             <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="width: 413px"></textarea>
+                <textarea name="addr" id="addr" placeholder="请输入内容" class="layui-textarea" style="width: 413px"></textarea>
             </div>
         </div>
 
-        <button type="button" class="layui-btn" id="test3" style="margin-top:30px;margin-left: -227px">
+        <button type="button" class="layui-btn" id="test3" style="margin-top:130px;margin-left:-150px">
             <i class="layui-icon">&#xe67c;</i>上传身份证图片
         </button>
-        <button type="button" class="layui-btn" id="test4" style="margin-top:30px;margin-left: 0px">
+        <div class="layui-upload-list" style="display:inline-block">
+            <img id="demo1" width="50px" height="50px" style="margin-top: 128px">
+        </div>
+        <div>
+        <button type="button" class="layui-btn" id="test4" style="margin-top:30px;margin-left: 115px;">
             <i class="layui-icon">&#xe67c;</i>上传银行卡图片
         </button>
+        <div class="layui-upload-list" style="display: inline-block">
+            <img id="demo2" width="50px" height="50px" style="margin-top: 28px">
+        </div>
+        </div>
 
         <div class="layui-form-item" style="margin-left: 200px">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px" id="Lsubmit">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
             </div>
         </div>
@@ -216,31 +225,69 @@
     var pageSize = 2
     var page = 1
     var areaNum = 0;
+    var newUserId=0;
+    //图片地址1
+    var imgaddr1 = 0;
+    //图片地址2
+    var imgaddr2 = 0;
+
     //获取下拉选框的值
 
     layui.use('upload', function(){
         var upload = layui.upload;
 
-        //执行实例
+        //执行实例上传身份证正反面
         var uploadInst = upload.render({
-            elem: '#test3' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
+            elem: '#test3'
+            , url: 'identityCardload'
+            , auto: true
+
+            , acceptMime: 'image/*'
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
             }
-            ,error: function(){
-                //请求异常回调
+            , done: function (res) {
+                if (res.success == 1) {
+                    imgaddr1=res.data
+                    console.log(res)
+                    layer.msg("上传成功！")
+                   // updateDataBaseHeadImg(userID, res.data)
+                   //  setTimeout(function () {
+                   //      layer.closeAll();
+                   //  }, 1000);
+                }
+            }
+            , error: function () {
+                //console.log(arguments)
             }
         });
-        //执行实例
+        //执行实例上传银行卡图片
         var uploadInst = upload.render({
-            elem: '#test4' //绑定元素
-            ,url: '/upload/' //上传接口
-            ,done: function(res){
-                //上传完毕回调
+            elem: '#test4'
+            , url: 'identityCardload1'
+            , auto: true
+            , acceptMime: 'image/*'
+            , choose: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo2').attr('src', result); //图片链接（base64）
+                });
             }
-            ,error: function(){
-                //请求异常回调
+            , done: function (res) {
+                imgaddr2=res.data
+                if (res.success == 1) {
+                    layer.msg("上传成功！")
+                   // updateDataBaseHeadImg(userID, res.data)
+                   //  setTimeout(function () {
+                   //      layer.closeAll();
+                   //  }, 1000);
+                }
+            }
+            , error: function () {
+                //console.log(arguments)
             }
         });
     });
@@ -325,7 +372,7 @@
             if (index % 2 == 0) {
                 if (eachobj.isStart == 1) {
                     var html = `<tr>
-        <td>${eachobj.id}</td>
+        <td><input type="checkbox" userid="${eachobj.id}" class="isChoicea"></td>
         <td>${eachobj.userName}</td>
         <td>${eachobj.roleName}</td>
         <td>${eachobj.userTypeName}</td>
@@ -356,7 +403,7 @@
                     })
                 } else {
                     var html = `<tr>
-        <td>${eachobj.id}</td>
+         <td><input type="checkbox" userid="${eachobj.id}"  class="isChoicea"></td>
         <td>${eachobj.userName}</td>
         <td>${eachobj.roleName}</td>
         <td>${eachobj.userTypeName}</td>
@@ -383,7 +430,7 @@
             } else {
                 if (eachobj.isStart == 1) {
                     var html = `<tr>
-        <td style="background-color: #9FDEAD">${eachobj.id}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" userid="${eachobj.id}"  class="isChoicea"></td>
         <td style="background-color: #9FDEAD">${eachobj.userName}</td>
         <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
         <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
@@ -406,7 +453,7 @@
                     })
                 } else {
                     var html = `<tr>
-        <td style="background-color: #9FDEAD">${eachobj.id}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" userid="${eachobj.id}" class="isChoicea"></td>
         <td style="background-color: #9FDEAD">${eachobj.userName}</td>
         <td style="background-color: #9FDEAD">${eachobj.roleName}</td>
         <td style="background-color: #9FDEAD">${eachobj.userTypeName}</td>
@@ -419,6 +466,7 @@
                         var id = $(this).attr("id")
                         if ($(this).is(':checked')) {
                             var status = 1
+                            madifyUserStatus(status, id)
                         } else {
                             var status = 0
                             madifyUserStatus(status, id)
@@ -447,9 +495,11 @@
         })
     }
 
-    //修改
-    layui.use('layer', function () {
+    //增加
+    layui.use(['layer','form'], function () {
         var layer = layui.layer;
+        var form = layui.form;
+        //增加
         $("#add").click(function () {
             layer.open({
                 type: 1,
@@ -463,9 +513,133 @@
                     return false;
                 }
             })
+
+            //正则
+            form.verify({
+                nickname: function (value) { //value：表单的值、item：表单的DOM对象
+                    if (value) {
+                        if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                            return '昵称不能有特殊字符';
+                        }
+                        if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                            return '昵称首尾不能出现下划线\'_\'';
+                        }
+                    }
+
+                }
+            });
+            form.render()
+            form.on('submit(formDemo)', function (data) {
+                var cardType = $("#cardtype").val()
+                var cardTypeName=0
+                if (cardType==0){
+                    cardTypeName="二代身份证"
+                }else if (cardType==1) {
+                    cardTypeName="护照";
+                }else if (cardType==2){
+                    cardTypeName="军证官"
+                }
+                var roleId = $("#role").val()
+                var roleName = 0;
+                if (roleId==0){
+                    roleName="会员"
+                }else if (roleId==1) {
+                    roleName="管理员";
+                }
+                var userType = $("#viptype").val()
+                var userTypeName = 0;
+                if (userType==0){
+                    userTypeName="注册会员"
+                }else if (userType==1) {
+                    userTypeName="消费会员";
+                }else if (userType==2){
+                    userTypeName="VIP会员"
+                }else if (userType==3){
+                    userTypeName="加盟店"
+                }
+                var userName = $("#username").val()
+                var userAddress=$("#addr").val()
+                var postCode = $("#cardnum").val()
+                var  email=$("#email").val()
+                var mobile=$("#phonenum").val()
+                //console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+                // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+                alert(userAddress) //当前容器的全部表单字段，名值对形式：{name: value}
+                $.ajax({
+                    type: "get",//方法
+                    url: "addUser",//表单接收url
+                    data:{"userName":userName,"userAddress":userAddress,
+                        "postCode":postCode,"email":email,"moble":mobile,
+                        "cardType":cardType,"cardTypeName":cardTypeName,
+                        "roleId":roleId,"roleName":roleName,
+                        "userType":userType,"userTypeName":userTypeName,
+                        "idCardPicPath":imgaddr1,"bankPicPath":imgaddr2},
+                    async: false,
+                    success: function (josnData) {
+                        if (josnData.success == 1) {
+                            layer.msg("修改成功")
+                        } else {
+                            layer.msg("修改失败")
+                        }
+                    },
+                    error: function () {
+                    }
+                });
+                setTimeout(function () {
+                    layer.closeAll();
+                    window.location.href = window.location.href
+                }, 500);
+                关闭信息框
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+
         })
+        //修改
 
     });
+    //修改身份证图片事件(更新数据库)
+    function modifyidentityCardimg( headImg) {
+
+        $.ajax({
+            url: "modifyidentityCardimg"
+            , data: {"userId": userId, "headImg": headImg}
+            , type: "post"
+            , dataType: "json"
+            , success: function (jsonData) {
+                // console.log(jsonData)
+            }
+            , error: function (res) {
+                console.log("ajax提交错误")
+            }
+        })
+    }
+
+    //删除按钮
+    $("#delete").click(function () {
+        $(".isChoicea").each(function () {
+            var id = $(this).attr("userid")
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url:"deleteUser",
+                    data: {"id": id},
+                    datatype: "json",
+                    type: "get",
+                    success: function (json) {
+                        console.log(json)
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
+        })
+        alert("删除成功")
+        location.href=location.href
+    })
+
+
 
 
 </script>

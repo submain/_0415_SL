@@ -58,12 +58,12 @@
 
         #addframe {
             width: 600px;
-            height: 600px;
+            height: 400px;
             /*border: 1px red solid;*/
         }
 
         .layui-input-block{
-            width: 150px;
+            width: 350px;
         }
 
     </style>
@@ -114,88 +114,29 @@
     <div id="test1"></div>
 </div>
 <div id="addframe" style="display: none">
-    <form action="" class="layui-form">
+    <form action="" class="layui-form" style="margin-top: 30px">
         <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
+            <label class="layui-form-label">角色编号：</label>
             <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">会员</option>
-                    <option value="1">管理员</option>
-                </select>
-            </div>
-
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">会员类型</label>
-            <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">注册会员</option>
-                    <option value="1">消费会员</option>
-                    <option value="1">vip会员</option>
-                    <option value="1">加盟店</option>
-                </select>
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入角色编号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">姓名</label>
+            <label class="layui-form-label">角色名称：</label>
             <div class="layui-input-block">
                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">证件类型</label>
+            <label class="layui-form-label">角色状态</label>
             <div class="layui-input-block">
-                <select name="city" lay-verify="required">
-                    <option value=""></option>
-                    <option value="0">二代身份证</option>
-                    <option value="1">护照</option>
-                    <option value="1">军证官</option>
-                </select>
+                <input type="radio" name="status" value="启用" title="启用" checked>
+                <input type="radio" name="status" value="禁用" title="禁用" >
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">证件号码</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">移动电话</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">邮政编码</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">收货地址</label>
-            <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="width: 413px"></textarea>
-            </div>
-        </div>
-
-        <button type="button" class="layui-btn" id="test3" style="margin-top:30px;margin-left: -227px">
-            <i class="layui-icon">&#xe67c;</i>上传身份证图片
-        </button>
-        <button type="button" class="layui-btn" id="test4" style="margin-top:30px;margin-left: 0px">
-            <i class="layui-icon">&#xe67c;</i>上传银行卡图片
-        </button>
-
         <div class="layui-form-item" style="margin-left: 200px">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
             </div>
         </div>
@@ -350,7 +291,7 @@
         $("#add").click(function () {
             layer.open({
                 type: 1,
-                area: ['600px', '600px'],
+                area: ['500px', '500px'],
                 content: $('#addframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
                 cancel: function(index, layero){
                     if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
