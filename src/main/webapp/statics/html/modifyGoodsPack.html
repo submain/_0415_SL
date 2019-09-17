@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改产品套餐</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+
+    <script type="text/javascript" src="./kindeditor/kindeditor-all.js"></script>
+    <script type="text/javascript" src="./kindeditor/lang/zh-CN.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/download.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shCore.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJava.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPython.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPhp.js"></script>
+    <link type="text/css" rel="stylesheet" href="./syntax/styles/shCoreDefault.css"/>
+    <style>
+        .layui-input-block input{
+            width: 300px;
+        }
+        .layui-input-block {
+            width: 600px;
+        }
+        .content{
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+<a href="ProductPackageManage.html" style="float: left;margin: 10px;color: #01AAED">返回上级菜单</a>
+<div id="addframe">
+    <form action="" class="layui-form" id="form1" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">套餐标题：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodsPackName" id="GoodsPackName" required  lay-verify="required" placeholder="请输入套餐标题" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodsPackNum" id="GoodsPackNum" required  lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">零售价：</label>
+            <div class="layui-input-block">
+                <input type="text" name="price" id="price" required  lay-verify="required" placeholder="请输入零售价" autocomplete="off" class="layui-input" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">套餐数：</label>
+            <div class="layui-input-block">
+                <input type="text" name="num" id="num" required  lay-verify="required" placeholder="请输入套餐数" autocomplete="off" class="layui-input" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block" style="margin-left: -60px">
+                <input type="radio" name="status" value="1" title="上架" checked>
+                <input type="radio" name="status" value="0" title="下架" >
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品说明：</label>
+            <div class="layui-input-block">
+                <textarea name="good_description" placeholder="请输入商品说明" class="layui-textarea" id="editor_id_2" style="height: 350px"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 200px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px;background-color:orangered" id="Lsubmit">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px;background-color: #9a9afb">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    var id = document.cookie
+
+    $.ajax({
+        url:"selectGoodsPackById",
+        data: {"id":id},
+        datatype: "json",
+        type:"get",
+        success:function (json) {
+            console.log(json)
+         $("#GoodsPackName").val(json.data.goodsPackName)
+         $("#GoodsPackNum").val(json.data.goodsPackCode)
+         $("#price").val(json.data.totalPrice)
+         $("#num").val(json.data.num)
+            if (json.data.state==1){
+                $("input[name='status'][value='1']").attr("checked",true);
+            }else {
+                $("input[name='status'][value='0']").attr("checked",true);
+
+            }
+        },
+        error:function () {
+
+        }
+    })
+    layui.use('form', function () {
+        //编辑器
+        KindEditor.ready(function (K) {
+            window.editor2 = K.create('#editor_id_2', {
+                items: [
+                    "redo", "|", "undo", "|", "bold", "|", "italic", "|", "strikethrough", "|", "insertorderedlist", "|",
+                    "insertunorderedlist", "|", "code", "|", "formatblock", "|", "table", "|", "link", "|", "unlink", "|",
+                    "image", "|", "fontname", "|", "fontsize", "|", "insertfile"
+                ], width: '100%',
+                uploadJson: './kindeditor/jsp/upload_json.jsp',
+                fileMangerJson: './kindeditor/jsp/file_manager_json.jsp',
+                allowUpload: true,
+                afterUpload: function (url) {
+                    // ////console.log(url)   //上传图片的路径
+                }
+
+            });
+            var form = layui.form;
+            // form.render()
+            form.on('submit(formDemo)', function (data) {
+                var GoodsPackName = $("#GoodsPackName").val()
+                var GoodsPackNum = $("#GoodsPackNum").val()
+                var price = $("#price").val()
+                var num = $("#num").val()
+                var goodsPackStatus = $('input:radio[name="status"]:checked').val();
+                var good_description = editor2.html()
+                $.ajax({
+                    url:"modifyGoodsPack",
+                    data:{"goodsPackName":GoodsPackName,"goodsPackCode":GoodsPackNum,
+                        "totalPrice":price,
+                        "num":num,
+                        "state":goodsPackStatus,
+                        "note":good_description,
+                        "id":id},
+                    datatype:"json",
+                    type:"get",
+                    success:function (json) {
+                        console.log(json)
+                        if (json.success==1){
+                            alert("修改成功")
+                            window.location.href ="ProductPackageManage.html"
+                        }
+                    },
+                    error:function () {
+
+                    }
+                })
+
+                //关闭信息框
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
+
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+</script>
+</html>

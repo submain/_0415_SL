@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>基础信息</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <style>
+        .layui-table {
+            width: 1226px;
+            border: 1px red solid;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            width: 1226px;
+            height: 30px;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .layui-input-block {
+            width: 80px;
+        }
+
+        .middle {
+            width: 1226px;
+            margin: 0 auto;
+
+        }
+
+        #test1 {
+
+        }
+
+        .pageContent {
+            margin: 0 auto;
+            width: 1226px;
+            text-align: center;
+        }
+
+        .middle span {
+            width: 50px;
+            height: 30px;
+            background-color: #01AAED;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .layui-form-item {
+            display: inline-block;
+        }
+
+        #addframe {
+            width: 600px;
+            height: 400px;
+            /*border: 1px red solid;*/
+        }
+
+        .layui-input-block{
+            width: 350px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="title">
+    <p>基础信息</p>
+</div>
+<div class="middle">
+    <span id="add">新增</span>
+    <span id="modify">修改</span>
+    <span id="deleteRole">删除</span>
+
+</div>
+
+<table class="layui-table">
+    <thead style="text-align: center;font-weight: bold;">
+    <tr>
+        <td style="background-color: #01AAED">选择</td>
+        <td style="background-color: #01AAED">参数关键字</td>
+        <td style="background-color: #01AAED">参数编码</td>
+        <td style="background-color: #01AAED">参数值</td>
+    </tr>
+    </thead>
+    <tbody class="my_t_body" id="my_t_body">
+    <tr>
+        <td><a href="">东城区</a></td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+        <td>贤心</td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+    </tr>
+    <tr>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+    </tr>
+
+    </tbody>
+</table>
+<div class="pageContent">
+    <div id="test1"></div>
+</div>
+<!--新增-->
+<div id="addframe" style="display: none">
+    <form action="" class="layui-form" style="margin-top: 30px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">关键字：</label>
+            <div class="layui-input-block">
+                <input type="text" name="key" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input" id="key">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" required  lay-verify="required" placeholder="请输入参数编码" autocomplete="off" class="layui-input" id="code">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数值：</label>
+            <div class="layui-input-block">
+                <input type="text" name="value" required  lay-verify="required" placeholder="请输入参数值" autocomplete="off" class="layui-input" id="value">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">参数描述：</label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入参数描述" class="layui-textarea" id="description"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 200px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--修改-->
+<div id="modifyframe" style="display: none">
+    <form action="" class="layui-form" style="margin-top: 30px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">关键字：</label>
+            <div class="layui-input-block">
+                <input type="text" name="key" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input" id="key_m">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数编码：</label>
+            <div class="layui-input-block">
+                <input type="text" name="code" required  lay-verify="required" placeholder="请输入参数编码" autocomplete="off" class="layui-input" id="code_m">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">参数值：</label>
+            <div class="layui-input-block">
+                <input type="text" name="value" required  lay-verify="required" placeholder="请输入参数值" autocomplete="off" class="layui-input" id="value_m">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">参数描述：</label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入参数描述" class="layui-textarea" id="description_m"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 200px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    $.ajax({
+        url:"getBasicInformationList",
+        datatype: "json",
+        type: "get",
+        success: function (json) {
+            console.log(json)
+            renderAjaxTable(json.data)
+        },
+        error:function () {
+
+        }
+    })
+    //渲染数据
+    function renderAjaxTable(data) {
+        $("#my_t_body").html("")
+        $.each(data, function (index, eachobj) {
+            if (index % 2 == 0) {
+                if (eachobj.isStart == 1) {
+                    var html = `<tr>
+        <td><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td>${eachobj.basicsname}</td>
+        <td>${eachobj.code}</td>
+        <td>${eachobj.valued}</td>
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+
+
+                            var status = 1
+                            alert(status)
+                            console.log(status)
+                            madifyUserStatus(status, id)
+
+                        } else {
+
+                            var status = 0
+                            console.log(status)
+                            madifyUserStatus(status, id)
+
+                        }
+
+                    })
+                } else {
+                    var html = `<tr>
+         <td><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+      <td>${eachobj.basicsname}</td>
+        <td>${eachobj.code}</td>
+        <td>${eachobj.valued}</td>
+
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                            madifyUserStatus(status, id)
+                        } else {
+                            var status = 0
+
+                            madifyUserStatus(status, id)
+                        }
+
+                    })
+                }
+
+            } else {
+                if (eachobj.isStart == 1) {
+                    var html = `<tr>
+       <td style="background-color: #9FDEAD"><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+        <td style="background-color: #9FDEAD">${eachobj.basicsname}</td>
+        <td style="background-color: #9FDEAD">${eachobj.code}</td>
+        <td style="background-color: #9FDEAD">${eachobj.valued}</td>
+
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                            madifyUserStatus(status, id)
+                        } else {
+                            var status = 0
+                            madifyUserStatus(status, id)
+
+                        }
+
+                    })
+                } else {
+                    var html = `<tr>
+       <td style="background-color: #9FDEAD"><input type="checkbox" class="deleteChose" roleId="${eachobj.id}"></td>
+         <td style="background-color: #9FDEAD">${eachobj.basicsname}</td>
+        <td style="background-color: #9FDEAD">${eachobj.code}</td>
+        <td style="background-color: #9FDEAD">${eachobj.valued}</td>
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                        } else {
+                            var status = 0
+                            madifyUserStatus(status, id)
+                        }
+
+                    })
+                }
+            }
+        })
+
+    }
+
+    //修改角色状态
+    function madifyUserStatus(status, id) {
+        $.ajax({
+            url: "madifyRoleStatus",
+            data: {"status": status, "id": id},
+            datatype: "json",
+            type: "get",
+            success: function (json) {
+                 console.log(json)
+
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    //修改  and  增加
+    layui.use(['layer','form'], function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        //新增
+        $("#add").click(function () {
+            layer.open({
+                type: 1,
+                area: ['500px', '500px'],
+                content: $('#addframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                cancel: function(index, layero){
+                    if(confirm('确定要关闭么')){ //只有当点击confirm框的确定时，该层才会关闭
+                        layer.close(index)
+                        $("#addframe").css("display","none")
+                    }
+                    return false;
+                }
+            })
+            form.verify({
+                nickname: function (value) { //value：表单的值、item：表单的DOM对象
+                    if (value) {
+                        if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                            return '昵称不能有特殊字符';
+                        }
+                        if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                            return '昵称首尾不能出现下划线\'_\'';
+                        }
+                    }
+
+                }
+            });
+            form.render()
+            form.on('submit(formDemo)', function (data) {
+                var key = $("#key").val()
+                var code = $("#code").val()
+                var value = $("#value").val()
+                var description = $("#description").val()
+
+                $.ajax({
+                    url:"addBasicInformation",
+                    data:{"basicsname":key,"code":code,"valued":value,"description":description},
+                    datatype:"json",
+                    type:"get",
+                    async:false,
+                    success:function (json) {
+                        console.log(json)
+                        if (json.success==1){
+                            alert("新增成功")
+                        } else {
+                            alert("新增失败")
+                        }
+                    },
+                    error:function () {
+
+                    }
+                })
+                setTimeout(function () {
+                    layer.closeAll();
+                    window.location.href = window.location.href
+                }, 500);
+                关闭信息框
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+
+        })
+        //修改
+        $("#modify").click(function () {
+            var id=0
+            var isHaveSelect = 0;
+            $(".deleteChose").each(function () {
+                if ($(this).is(':checked')) {
+                    id = $(this).attr("roleId")
+                    isHaveSelect=isHaveSelect+1
+                    $.ajax({
+                        url:"getBasicInformationSelected",
+                        data: {"id": id},
+                        datatype: "json",
+                        type: "get",
+                        async:false,
+                        success: function (json) {
+                            console.log("---------------")
+                            console.log(json)
+                            //渲染数据
+                            $("#key_m").val(json.data.basicsname)
+                            $("#code_m").val(json.data.code)
+                            $("#value_m").val(json.data.valued)
+                            $("#description_m").val(json.data.description)
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+
+            })
+            if (isHaveSelect==0){
+                alert("请选择一个需要修改的用户")
+            } else if (isHaveSelect>1) {
+                alert("只能选择一个，不能选择多个进行修改")
+            }else {
+                layer.open({
+                    type: 1,
+                    area: ['500px', '500px'],
+                    content: $('#modifyframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    cancel: function (index, layero) {
+                        if (confirm('确定要关闭么')) { //只有当点击confirm框的确定时，该层才会关闭
+                            layer.close(index)
+                            $("#modifyframe").css("display", "none")
+                        }
+                        return false;
+                    }
+                })
+                form.verify({
+                    nickname: function (value) { //value：表单的值、item：表单的DOM对象
+                        if (value) {
+                            if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                                return '昵称不能有特殊字符';
+                            }
+                            if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                                return '昵称首尾不能出现下划线\'_\'';
+                            }
+                        }
+
+                    }
+                });
+                form.render()
+                form.on('submit(formDemo)', function (data) {
+                    var key = $("#key_m").val()
+                    var code = $("#code_m").val()
+                    var value = $("#value_m").val()
+                    var description = $("#description_m").val()
+                    $.ajax({
+                        url: "modifyBasicInformation",
+                        data: {"basicsname":key,"code":code,"valued":value,"description":description,"id":id},
+                        datatype: "json",
+                        type: "get",
+                        async:false,
+                        success: function (json) {
+                            console.log(json)
+                            if (json.success==1){
+                                alert("修改成功")
+                            }else {
+                                alert("修改失败")
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
+                    setTimeout(function () {
+                        layer.closeAll();
+                        window.location.href = window.location.href
+                    }, 500);
+                    //关闭信息框
+                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                });
+            }
+
+        })
+
+    });
+
+
+    //删除操作
+    $("#deleteRole").click(function () {
+        //用来记录是否有选中数据
+        var isChose = 0
+        $(".deleteChose").each(function () {
+            var roleId=$(this).attr("roleId")
+            if ($(this).is(':checked')) {
+                isChose=1
+                if (confirm("确定要删除这条信息吗")){
+                    $.ajax({
+                        url: "DeleteBasicInformation",
+                        data: {"id": roleId},
+                        datatype: "json",
+                        type: "get",
+                        success: function (json) {
+                            console.log(json)
+
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+            }
+
+        })
+        if (isChose==0){
+            alert("请选择至少一项")
+        }else {
+            window.location.href=window.location.href
+        }
+
+    })
+
+    //
+
+
+
+
+</script>
+</html>

@@ -33,5 +33,7 @@ public interface Data_dictoryService {
      */
     public BaseResp addData_dictionary(Data_dictionary data_dictionary) throws Exception;
 
+    public BaseResp getData_dictionaryById(Data_dictionary data_dictionary);
+
 
 }

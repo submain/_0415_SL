@@ -14,6 +14,16 @@
 		select count(*) from data_dictionary
 	</select>
 
+	<!-- 根据Id删除字典 -->
+	<delete id="deleteData_dictionaryById">
+		delete from data_dictionary where id = #{id}
+	</delete>
+	<!-- 根据Id查询字典 -->
+	<select id="getData_dictionaryById" resultType="Data_dictionary">
+		select * from data_dictionary where id=#{id}
+	</select>
+
+
 
 	
 

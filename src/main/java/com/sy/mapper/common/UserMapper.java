@@ -30,6 +30,13 @@ public interface UserMapper {
     public User getLoginUser(User user) throws Exception;
 
     /**
+     * 查询登录的用户
+     * @param user
+     * @return
+     */
+    public User getUserByLoginCode(User user) throws Exception;
+
+    /**
      * 按主键查询用户
      * @param user
      * @return
@@ -95,4 +102,6 @@ public interface UserMapper {
      * @throws Exception
      */
     public Integer madifyUserStatus(@Param("status") Integer status,@Param("id") Integer id) throws Exception;
+
+
 }

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加商品</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+
+    <script type="text/javascript" src="./kindeditor/kindeditor-all.js"></script>
+    <script type="text/javascript" src="./kindeditor/lang/zh-CN.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/download.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shCore.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJava.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPython.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPhp.js"></script>
+    <link type="text/css" rel="stylesheet" href="./syntax/styles/shCoreDefault.css"/>
+    <style>
+        .layui-input-block input{
+            width: 300px;
+        }
+        .layui-input-block {
+            width: 600px;
+        }
+        .content{
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+<a href="GoodManage.html" style="float: left;margin: 10px;color: #01AAED">返回上级菜单</a>
+<div id="addframe">
+    <form action="" class="layui-form" id="form1" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodName" id="GoodName" required  lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodNum" id="GoodNum" required  lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">市场价(元)：</label>
+            <div class="layui-input-block">
+                <input type="text" name="market_price" id="market_price" required  lay-verify="required" placeholder="请输入市场价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">优惠价(元)：</label>
+            <div class="layui-input-block">
+                <input type="text" name="preferential_price" id="preferential_price" required  lay-verify="required" placeholder="请输入优惠价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库存(个)：</label>
+            <div class="layui-input-block">
+                <input type="text" name="repertory" id="repertory" required  lay-verify="required" placeholder="请输入库存" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单位：</label>
+            <div class="layui-input-block">
+                <input type="text" name="unit" id="unit" required  lay-verify="required" placeholder="请输入单位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品规格：</label>
+           <div id="editor_id_1" style="width: 595px;height: 350px;border: 1px #EAE8E8 solid;margin-left: 111px"></div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品说明：</label>
+            <div class="layui-input-block">
+                <textarea name="good_description" placeholder="请输入商品说明" class="layui-textarea" id="editor_id_2" style="height: 350px"></textarea>
+            </div>
+        </div>
+
+    </form>
+</div>
+</div>
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    var id = document.cookie
+    $.ajax({
+        url:"selectGoods_infoById",
+        data: {"id":id},
+        datatype: "json",
+        type:"get",
+        success:function (json) {
+            console.log(json)
+         $("#GoodName").val(json.data.goodsName)
+         $("#GoodNum").val(json.data.goodsSN)
+         $("#market_price").val(json.data.marketPrice)
+         $("#repertory").val(json.data.num)
+         $("#unit").val(json.data.unit)
+         $("#preferential_price").val(json.data.realPrice)
+         $("#editor_id_1").html(json.data.goodsFormat)
+            $("#editor_id_2").html(json.data.note)
+        },
+        error:function () {
+
+        }
+    })
+
+</script>
+</html>

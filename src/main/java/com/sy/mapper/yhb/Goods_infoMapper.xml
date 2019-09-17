@@ -12,7 +12,7 @@
 			 and goodsName like  #{goodsName}
 			</if>
 		 </trim>
-		 order by createTime desc limit #{starNum},#{pageSize}
+		 order by createTime desc
 	</select>
 
 	<select id="getGoods_infoList" resultType="Goods_info" parameterType="Goods_info">
@@ -23,7 +23,7 @@
 	<select id="count" resultType="int" parameterType="Goods_info">
 		select count(1) from goods_info
 		<trim prefix="where" prefixOverrides="and | or">
-			<if test="userName != null">
+			<if test="goodsName != null">
 				and goodsName like  CONCAT('%',#{goodsName},'%')
 			</if>
 

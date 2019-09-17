@@ -6,6 +6,24 @@ public class Data_dictionary {
     private String typeName;
     private Integer valueId;
     private String valueName;
+    private Integer starNum;
+    private Integer pageSize;
+
+    public Integer getStarNum() {
+        return starNum;
+    }
+
+    public void setStarNum(Integer starNum) {
+        this.starNum = starNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public Integer getId() {
         return id;

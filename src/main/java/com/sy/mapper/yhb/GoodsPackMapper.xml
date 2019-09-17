@@ -12,7 +12,7 @@
 			 and goodsPackName like  CONCAT('%',#{goodsPackName},'%')
 			</if>
 		 </trim>
-		 order by createTime desc limit #{starNum},#{pageSize}
+		 order by createTime desc
 	</select>
 
 	<select id="getGoodsPackList" resultType="GoodsPack" parameterType="GoodsPack">
@@ -40,14 +40,14 @@
 
 	<!-- 根据主键查询商品 -->
 	<select id="getGoodsPackById" resultType="GoodsPack" parameterType="GoodsPack">
-		select * from goods_info where id = #{id}
+		select * from goods_pack where id = #{id}
     </select>
     
     <!-- 增加商品 -->
 	<insert id="addGoodsPack" parameterType="GoodsPack">
-		insert into goods_pack (goodsPackName,goodsPackCode,typeId,typeName,totalPrice,state,note)
+		insert into goods_pack (goodsPackName,goodsPackCode,typeId,typeName,totalPrice,state,note,lastUpdateTime)
 		values (#{goodsPackName},
-		  #{goodsPackCode},#{typeId},#{typeName},#{totalPrice},#{state},#{note}
+		  #{goodsPackCode},#{typeId},#{typeName},#{totalPrice},#{state},#{note},#{lastUpdateTime}
 		)
 	</insert>
     
@@ -60,7 +60,7 @@
     <!-- 修改商品-->
 	<update id="modifyGoodsPack" parameterType="GoodsPack">
 		update goods_pack set goodsPackName=#{goodsPackName},goodsPackCode=#{goodsPackCode},typeName=#{typeName},
-		totalPrice=#{totalPrice},state=#{state},note=#{note} where id=#{id}
+		totalPrice=#{totalPrice},state=#{state},note=#{note},num=#{num} where id=#{id}
 	</update>
 
 	

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="../jquery/jquery.js"></script>
     <style>
         .content{
             width: 1226px;
@@ -10,29 +11,60 @@
             text-align: center;
             padding-top: 300px;
         }
-        .next{
+        .next button{
             background-color: #00FFFF;
             width: 80px;
             height: 40px;
             text-align: center;
             line-height: 40px;
             color: red;
-            margin-left: 720px;
+            margin-left: 420px;
             cursor: pointer;
             margin-top: 20px;
         }
         .next a{
             text-decoration: none;
         }
+
     </style>
 </head>
 <body>
 
 <div class="content">
-    报单购货会员用户名：<input style="width: 200px;height: 30px">
+    报单购货会员用户名：<input style="width: 200px;height: 30px" id="value">
 
-    <div class="next"><a href="Declarationshopping03.html">好的继续</a></div>
+    <div class="next"><button id="next">好的继续</button></div>
 </div>
 
 </body>
+<script>
+    $("#next").click(function () {
+        var value = $("#value").val()
+        if (value!=""){
+            $.ajax({
+                url:"getUserLoginCode",
+                data:{"loginCode":value},
+                dataType:"json",
+                type:"get",
+                success:function (json) {
+                    console.log(json)
+                    if (json.success==1){
+                        document.cookie=json.data
+                        window.location.href="Declarationshopping03.html"
+                    } else {
+                        alert("用户名不存在")
+                    }
+                },
+                error:function () {
+
+                }
+
+            })
+        } else {
+            alert("请输入用户名")
+        }
+
+    })
+</script>
+
 </html>

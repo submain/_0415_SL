@@ -39,4 +39,5 @@ public class Goods_infoServiceImplTest {
             e.printStackTrace();
         }
     }
+
 }

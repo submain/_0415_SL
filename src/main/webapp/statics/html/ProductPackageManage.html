@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>产品套餐管理</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <script type="text/javascript" src="./kindeditor/kindeditor-all.js"></script>
+    <script type="text/javascript" src="./kindeditor/lang/zh-CN.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/download.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shCore.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJava.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPython.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPhp.js"></script>
+    <link type="text/css" rel="stylesheet" href="./syntax/styles/shCoreDefault.css"/>
+    <style>
+        .layui-table {
+            width: 1226px;
+            border: 1px red solid;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .title {
+            width: 1226px;
+            height: 30px;
+            margin: 0 auto;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .layui-input-block {
+            width: 80px;
+        }
+
+        .middle {
+            width: 1226px;
+            margin: 0 auto;
+
+        }
+
+        #test1 {
+
+        }
+
+        .pageContent {
+            margin: 0 auto;
+            width: 1226px;
+            text-align: center;
+        }
+
+        .middle span {
+            width: 50px;
+            height: 30px;
+            background-color: #01AAED;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        /*.layui-form-item {*/
+            /*display: inline-block;*/
+        /*}*/
+
+        #addframe {
+            width: 600px;
+            /*height: 600px;*/
+            /*border: 1px red solid;*/
+        }
+
+        .layui-input-block{
+            width: 150px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="title">
+    <p>产品套餐管理</p>
+</div>
+<div class="middle">
+    <span id="add">新增</span>
+    <span id="modify">修改</span>
+    <span id="delete">删除</span>
+    <span id="look_over">查看</span>
+    <input type="text" placeholder="请输入关键词查找" style="height: 30px;" id="search_text">
+    <div style="width: 60px;height: 30px;background-color: #b2b2b2;display: inline-block;margin-top: -10px;text-align: center;line-height: 30px;cursor: pointer" id="search">
+        查找
+    </div>
+</div>
+
+<table class="layui-table">
+    <thead style="text-align: center;font-weight: bold;">
+    <tr>
+        <td style="background-color: #01AAED">选择</td>
+        <td style="background-color: #01AAED">编号</td>
+        <td style="background-color: #01AAED">套餐标题</td>
+        <td style="background-color: #01AAED">零售价（元）</td>
+        <td style="background-color: #01AAED">优惠价（元）</td>
+        <td style="background-color: #01AAED">剩余套餐数</td>
+        <td style="background-color: #01AAED">状态（上架/下架）</td>
+        <td style="background-color: #01AAED">最后修改时间</td>
+    </tr>
+    </thead>
+    <tbody class="my_t_body" id="my_t_body">
+    <tr>
+        <td><a href="">东城区</a></td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+        <td>贤心</td>
+        <td>2016-11-29</td>
+        <td>人生就像是一场修行</td>
+        <td>人生就像是一场修行</td>
+    </tr>
+    <tr>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+        <td>许闲心</td>
+        <td>2016-11-28</td>
+        <td>于千万人之中遇见你</td>
+        <td>于千万人之中遇见你</td>
+    </tr>
+
+    </tbody>
+</table>
+<div class="pageContent">
+    <div id="test1"></div>
+</div>
+
+
+
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+
+    var pageSize = 2
+    var page = 1
+    var areaNum = 0;
+    var newUserId=0;
+    //图片地址1
+    var imgaddr1 = 0;
+    //图片地址2
+    var imgaddr2 = 0;
+
+    //查看
+    $("#look_over").click(function () {
+        var id=0
+        var isHaveSelect=0
+        $(".isChoicea").each(function () {
+
+            if ($(this).is(':checked')) {
+                id = $(this).attr("userid")
+                isHaveSelect=isHaveSelect+1
+            }
+
+        })
+        if (isHaveSelect==0){
+            alert("请选择一个需要查看的用户")
+        } else if (isHaveSelect>1) {
+            alert("只能选择一个，不能选择多个进行查看")
+        }else {
+            document.cookie=id
+            window.location.href = "look_overGoodsPack.html"
+        }
+    })
+
+
+    //搜索
+    $("#search").click(function () {
+        var searchkey = $("#search_text").val()
+        if (searchkey!="") {
+
+
+            //alert(searchkey)
+            //alert(searchkey)
+            $.ajax({
+                url: "selectGoodsPackByKey",
+                data: {"key": searchkey},
+                datatype: "json",
+                type: "get",
+                success: function (json) {
+                    console.log(json)
+                    renderAjaxTable(json.data)
+                    $("#test1").css("display", "none")
+                }
+            })
+        }else {
+            alert("请输入搜索内容")
+        }
+    })
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+
+    function renderPageContainer(count) {
+        layui.use('laypage', function () {
+            var laypage = layui.laypage;
+
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                , count: count //数据总数，从服务端得到
+                , limit: pageSize
+                , curr: page
+                , limits: [2, 4]
+                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                , jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    console.log(obj.limit); //得到每页显示的条数
+
+                    //首次不执行
+                    if (!first) {
+
+                        //把分页值，和分页量（分页量可能会变化）
+                        page = obj.curr;
+                        pageSize = obj.limit;
+
+                        ajaxGetAirQuiltyByPage()
+                    }
+                }
+            });
+        });
+    }
+
+    ajaxGetAirQuiltyByPage()
+
+    function ajaxGetAirQuiltyByPage() {
+
+        $.ajax({
+            url: "getGoodsPack",
+            data: {"page": page, "pageSize": pageSize},
+            datatype: "json",
+            type: "get",
+            success: function (json) {
+                console.log(json)
+                renderPageContainer(json.count)
+                renderAjaxTable(json.data)
+                if (json.success == 404) {
+                    $("#my_t_body").html("")
+                    var html = `
+             <tr>
+                    <td colspan="6">抱歉！暂无数据</td>
+
+                </tr>`
+                    $("#my_t_body").append(html)
+                }
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    //渲染数据
+    function renderAjaxTable(data) {
+        $("#my_t_body").html("")
+        $.each(data, function (index, eachobj) {
+            if (index % 2 == 0) {
+                if (eachobj.state == 1) {
+                    var html = `<tr>
+        <td><input type="checkbox" userid="${eachobj.id}" class="isChoicea"></td>
+        <td>${eachobj.goodsPackCode}</td>
+        <td>${eachobj.goodsPackName}</td>
+        <td>${eachobj.totalPrice}</td>
+        <td>${eachobj.totalPrice}</td>
+        <td>${eachobj.num}</td>
+        <td><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
+        <td>${eachobj.lastUpdateTime}</td>
+
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+
+
+                            var status = 1
+                            alert(status)
+                            console.log(status)
+                            madifyUserStatus(status, id)
+
+                        } else {
+
+                            var status = 0
+                            console.log(status)
+                            madifyUserStatus(status, id)
+
+                        }
+
+                    })
+                } else {
+                    var html = `<tr>
+         <td><input type="checkbox" userid="${eachobj.id}"  class="isChoicea"></td>
+         <td>${eachobj.goodsPackCode}</td>
+        <td>${eachobj.goodsPackName}</td>
+        <td>${eachobj.totalPrice}</td>
+        <td>${eachobj.totalPrice}</td>
+        <td>${eachobj.num}</td>
+        <td><input type="checkbox" id="${eachobj.id}" class="status"></td>
+        <td>${eachobj.lastUpdateTime}</td>
+
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                            madifyUserStatus(status, id)
+                        } else {
+                            var status = 0
+
+                            madifyUserStatus(status, id)
+                        }
+
+                    })
+                }
+
+            } else {
+                if (eachobj.state == 1) {
+                    var html = `<tr>
+        <td style="background-color: #9FDEAD"><input type="checkbox" userid="${eachobj.id}"  class="isChoicea"></td>
+        <td style="background-color: #9FDEAD">${eachobj.goodsPackCode}</td>
+        <td style="background-color: #9FDEAD">${eachobj.goodsPackName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.totalPrice}</td>
+        <td style="background-color: #9FDEAD">${eachobj.totalPrice}</td>
+        <td style="background-color: #9FDEAD">${eachobj.num}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" checked class="status"></td>
+        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                            madifyUserStatus(status, id)
+                        } else {
+                            var status = 0
+                            madifyUserStatus(status, id)
+
+                        }
+
+                    })
+                } else {
+                    var html = `<tr>
+        <td style="background-color: #9FDEAD"><input type="checkbox" userid="${eachobj.id}" class="isChoicea"></td>
+         <td style="background-color: #9FDEAD">${eachobj.goodsPackCode}</td>
+        <td style="background-color: #9FDEAD">${eachobj.goodsPackName}</td>
+        <td style="background-color: #9FDEAD">${eachobj.totalPrice}</td>
+        <td style="background-color: #9FDEAD">${eachobj.totalPrice}</td>
+        <td style="background-color: #9FDEAD">${eachobj.num}</td>
+        <td style="background-color: #9FDEAD"><input type="checkbox" id="${eachobj.id}" class="status"></td>
+        <td style="background-color: #9FDEAD">${eachobj.lastUpdateTime}</td>
+    </tr>`
+                    $("#my_t_body").append(html)
+                    $(".status").click(function () {
+                        var id = $(this).attr("id")
+                        if ($(this).is(':checked')) {
+                            var status = 1
+                            madifyUserStatus(status, id)
+                        } else {
+                            var status = 0
+                            madifyUserStatus(status, id)
+                        }
+
+                    })
+                }
+            }
+        })
+
+    }
+
+    //修改用户状态
+    function madifyUserStatus(status, id) {
+        $.ajax({
+            url: "madifyUserStatus",
+            data: {"status": status, "id": id},
+            datatype: "json",
+            type: "get",
+            success: function (json) { // console.log(json)
+
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    //增加
+    $("#add").click(function () {
+        window.location.href="addGoodsPack.html"
+    })
+    //修改
+    $("#modify").click(function () {
+        var id=0
+        var isHaveSelect=0
+        $(".isChoicea").each(function () {
+
+            if ($(this).is(':checked')) {
+                isHaveSelect=isHaveSelect+1
+                id = $(this).attr("userid")
+            }
+
+        })
+        if (isHaveSelect==0){
+            alert("请选择一个需要修改的用户")
+        } else if (isHaveSelect>1) {
+            alert("只能选择一个，不能选择多个进行修改")
+        }else {
+            document.cookie=id
+            window.location.href = "modifyGoodsPack.html"
+        }
+    })
+    function modifyidentityCardimg( headImg) {
+
+        $.ajax({
+            url: "modifyidentityCardimg"
+            , data: {"userId": userId, "headImg": headImg}
+            , type: "post"
+            , dataType: "json"
+            , success: function (jsonData) {
+                // console.log(jsonData)
+            }
+            , error: function (res) {
+                console.log("ajax提交错误")
+            }
+        })
+    }
+
+    //删除按钮
+    $("#delete").click(function () {
+        var isHaveSelect = 0;
+        $(".isChoicea").each(function () {
+            var id = $(this).attr("userid")
+            if ($(this).is(':checked')) {
+                isHaveSelect=1
+                $.ajax({
+                    url:"deleteGoodsPackById",
+                    data: {"id": id},
+                    datatype: "json",
+                    type: "get",
+                    success: function (json) {
+                        console.log(json)
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+
+        })
+        if (isHaveSelect!=0){
+            alert("删除成功")
+            location.href=location.href
+        } else{
+            alert("请至少选中一项")
+        }
+
+    })
+
+    //编辑器
+    KindEditor.ready(function (K) {
+        window.editor = K.create('#editor_id_1', {
+            items: [
+                "redo", "|", "undo", "|", "bold", "|", "italic", "|", "strikethrough", "|", "insertorderedlist", "|",
+                "insertunorderedlist", "|", "code", "|", "formatblock", "|", "table", "|", "link", "|", "unlink", "|",
+                "image", "|", "fontname", "|", "fontsize", "|", "insertfile"
+            ], width: '100%',
+            uploadJson: './kindeditor/jsp/upload_json.jsp',
+            fileMangerJson: './kindeditor/jsp/file_manager_json.jsp',
+            allowUpload: true,
+            afterUpload: function (url) {
+                // ////console.log(url)   //上传图片的路径
+            }
+        });
+
+
+
+
+    });
+
+
+
+
+
+</script>
+</html>

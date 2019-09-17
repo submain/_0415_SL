@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改商品</title>
+    <script src="../jquery/jquery.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+
+    <script type="text/javascript" src="./kindeditor/kindeditor-all.js"></script>
+    <script type="text/javascript" src="./kindeditor/lang/zh-CN.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/download.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shCore.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushXml.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushJava.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushCss.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPython.js"></script>
+    <script type="text/javascript" src="./syntax/scripts/shBrushPhp.js"></script>
+    <link type="text/css" rel="stylesheet" href="./syntax/styles/shCoreDefault.css"/>
+    <style>
+        .layui-input-block input{
+            width: 300px;
+        }
+        .layui-input-block {
+            width: 600px;
+        }
+        .content{
+            width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+<a href="GoodManage.html" style="float: left;margin: 10px;color: #01AAED">返回上级菜单</a>
+<div id="addframe">
+    <form action="" class="layui-form" id="form1" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodName" id="GoodName" required  lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="GoodNum" id="GoodNum" required  lay-verify="required" placeholder="请输入商品编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">市场价：</label>
+            <div class="layui-input-block">
+                <input type="text" name="market_price" id="market_price" required  lay-verify="required" placeholder="请输入市场价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">优惠价：</label>
+            <div class="layui-input-block">
+                <input type="text" name="preferential_price" id="preferential_price" required  lay-verify="required" placeholder="请输入优惠价" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库存：</label>
+            <div class="layui-input-block">
+                <input type="text" name="repertory" id="repertory" required  lay-verify="required" placeholder="请输入库存" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单位：</label>
+            <div class="layui-input-block">
+                <input type="text" name="unit" id="unit" required  lay-verify="required" placeholder="请输入单位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品规格：</label>
+            <div class="layui-input-block">
+                <textarea name="specification_of_goods" placeholder="请输入商品规格" class="layui-textarea"  id="editor_id_1" style="height: 350px"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商品说明：</label>
+            <div class="layui-input-block">
+                <textarea name="good_description" placeholder="请输入商品说明" class="layui-textarea" id="editor_id_2" style="height: 350px"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 200px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px" id="Lsubmit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+<script src="../layui/layui.all.js"></script>
+<script>
+    var id = document.cookie
+    $.ajax({
+        url:"selectGoods_infoById",
+        data: {"id":id},
+        datatype: "json",
+        type:"get",
+        success:function (json) {
+            console.log(json)
+         $("#GoodName").val(json.data.goodsName)
+         $("#GoodNum").val(json.data.goodsSN)
+         $("#market_price").val(json.data.marketPrice)
+         $("#repertory").val(json.data.num)
+         $("#unit").val(json.data.unit)
+         $("#preferential_price").val(json.data.realPrice)
+         $("#editor_id_1").text(json.data.goodsFormat)
+            $("#editor_id_2").html(json.data.note)
+        },
+        error:function () {
+
+        }
+    })
+    layui.use('form', function () {
+        //编辑器
+        KindEditor.ready(function (K) {
+            window.editor1 = K.create('#editor_id_1', {
+                items: [
+                    "redo", "|", "undo", "|", "bold", "|", "italic", "|", "strikethrough", "|", "insertorderedlist", "|",
+                    "insertunorderedlist", "|", "code", "|", "formatblock", "|", "table", "|", "link", "|", "unlink", "|",
+                    "image", "|", "fontname", "|", "fontsize", "|", "insertfile"
+                ], width: '100%',
+                uploadJson: './kindeditor/jsp/upload_json.jsp',
+                fileMangerJson: './kindeditor/jsp/file_manager_json.jsp',
+                allowUpload: true,
+                afterUpload: function (url) {
+                    // ////console.log(url)   //上传图片的路径
+                }
+            });
+            window.editor2 = K.create('#editor_id_2', {
+                items: [
+                    "redo", "|", "undo", "|", "bold", "|", "italic", "|", "strikethrough", "|", "insertorderedlist", "|",
+                    "insertunorderedlist", "|", "code", "|", "formatblock", "|", "table", "|", "link", "|", "unlink", "|",
+                    "image", "|", "fontname", "|", "fontsize", "|", "insertfile"
+                ], width: '100%',
+                uploadJson: './kindeditor/jsp/upload_json.jsp',
+                fileMangerJson: './kindeditor/jsp/file_manager_json.jsp',
+                allowUpload: true,
+                afterUpload: function (url) {
+                    // ////console.log(url)   //上传图片的路径
+                }
+
+            });
+            var form = layui.form;
+            // form.render()
+            form.on('submit(formDemo)', function (data) {
+                var specification_of_goods=editor1.html()
+                var GoodName = $("#GoodName").val()
+                var GoodNum = $("#GoodNum").val()
+                var market_price = $("#market_price").val()
+                var preferential_price = $("#preferential_price").val()
+                var repertory = $("#repertory").val()
+                var unit = $("#unit").val()
+                var good_description = editor2.html()
+                $.ajax({
+                    url:"addGoods_info",
+                    data:{"goodsName":GoodName,"goodsSN":GoodNum,
+                        "marketPrice":market_price,
+                        "realPrice":preferential_price,
+                        "num":repertory,
+                        "unit":unit,
+                        "goodsFormat":specification_of_goods,
+                        "note":good_description},
+                    datatype:"json",
+                    type:"get",
+                    success:function (json) {
+                        console.log(json)
+                        if (json.success==1){
+                            alert("添加成功")
+                            window.location.href ="GoodManage.html"
+                        }
+                    },
+                    error:function () {
+
+                    }
+                })
+
+                //关闭信息框
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
+
+
+        //各种基于事件的操作，下面会有进一步介绍
+    });
+</script>
+</html>

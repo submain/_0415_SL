@@ -50,6 +50,7 @@
             display: inline-block;
             text-align: center;
             line-height: 30px;
+            cursor: pointer;
         }
 
         .layui-form-item {
@@ -74,7 +75,7 @@
 </div>
 <div class="middle">
     <span id="add">新增</span>
-    <span>修改</span>
+    <span id="modify">修改</span>
     <span id="deleteRole">删除</span>
 
 </div>
@@ -113,25 +114,56 @@
 <div class="pageContent">
     <div id="test1"></div>
 </div>
+<!--新增-->
 <div id="addframe" style="display: none">
     <form action="" class="layui-form" style="margin-top: 30px">
         <div class="layui-form-item">
             <label class="layui-form-label">角色编号：</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入角色编号" autocomplete="off" class="layui-input">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入角色编号" autocomplete="off" class="layui-input" id="roleNum">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">角色名称：</label>
             <div class="layui-input-block">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" id="roleName">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">角色状态</label>
-            <div class="layui-input-block">
+            <div class="layui-input-block" id="roleStatus">
                 <input type="radio" name="status" value="启用" title="启用" checked>
                 <input type="radio" name="status" value="禁用" title="禁用" >
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 200px">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" style="margin-top: 30px;display: inline-block;margin-left: -10px">保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" style="margin-top: 30px;display: inline-block;margin-left: -3px">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--修改-->
+<div id="modifyframe" style="display: none">
+    <form action="" class="layui-form" style="margin-top: 30px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色编号：</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入角色编号" autocomplete="off" class="layui-input" id="roleNum_m">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" id="roleName_m">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色状态</label>
+            <div class="layui-input-block" id="roleStatus_m">
+                <input type="radio" name="status_m" value="启用" title="启用" checked>
+                <input type="radio" name="status_m" value="禁用" title="禁用" >
             </div>
         </div>
         <div class="layui-form-item" style="margin-left: 200px">
@@ -285,9 +317,11 @@
         })
     }
 
-    //修改
-    layui.use('layer', function () {
+    //修改  and  增加
+    layui.use(['layer','form'], function () {
         var layer = layui.layer;
+        var form = layui.form;
+        //新增
         $("#add").click(function () {
             layer.open({
                 type: 1,
@@ -301,6 +335,149 @@
                     return false;
                 }
             })
+            form.verify({
+                nickname: function (value) { //value：表单的值、item：表单的DOM对象
+                    if (value) {
+                        if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                            return '昵称不能有特殊字符';
+                        }
+                        if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                            return '昵称首尾不能出现下划线\'_\'';
+                        }
+                    }
+
+                }
+            });
+            form.render()
+            form.on('submit(formDemo)', function (data) {
+                var roleNum = $("#roleNum").val()
+                var roleName = $("#roleName").val()
+                var roleStatus = $('input:radio[name="status"]:checked').val();
+                var roleStatusNum=0
+                alert(roleStatus)
+                if (roleStatus=="启用"){
+                    roleStatusNum = 1
+                }else {
+                    roleStatusNum = 0
+                }
+                $.ajax({
+                    url:"addRole",
+                    data:{"isStart":roleStatusNum,"roleCode":roleNum,"roleName":roleName},
+                    datatype:"json",
+                    type:"get",
+                    success:function (json) {
+                        console.log(json)
+                    },
+                    error:function () {
+
+                    }
+                })
+                setTimeout(function () {
+                    layer.closeAll();
+                    window.location.href = window.location.href
+                }, 500);
+                //关闭信息框
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+
+
+        })
+        //修改
+        $("#modify").click(function () {
+            var id=0
+            var isHaveSelect = 0;
+            $(".deleteChose").each(function () {
+                id = $(this).attr("roleId")
+                if ($(this).is(':checked')) {
+                    isHaveSelect=isHaveSelect+1
+                    $.ajax({
+                        url:"getRoleSelected",
+                        data: {"selectedId": id},
+                        datatype: "json",
+                        type: "get",
+                        async:false,
+                        success: function (json) {
+                            console.log("---------------")
+                            console.log(json)
+                            //渲染数据
+                            $("#roleNum_m").val(json.data.roleCode)
+                            $("#roleName_m").val(json.data.roleName)
+                            if (json.data.isStart==1){
+                                $("input[name='status_m'][value='启用']").attr("checked",true);
+                            }else {
+                                $("input[name='status_m'][value='禁用']").attr("checked",true);
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+
+            })
+            if (isHaveSelect==0){
+                alert("请选择一个需要修改的用户")
+            } else if (isHaveSelect>1) {
+                alert("只能选择一个，不能选择多个进行修改")
+            }else {
+                layer.open({
+                    type: 1,
+                    area: ['500px', '500px'],
+                    content: $('#modifyframe'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                    cancel: function (index, layero) {
+                        if (confirm('确定要关闭么')) { //只有当点击confirm框的确定时，该层才会关闭
+                            layer.close(index)
+                            $("#addframe").css("display", "none")
+                        }
+                        return false;
+                    }
+                })
+                form.verify({
+                    nickname: function (value) { //value：表单的值、item：表单的DOM对象
+                        if (value) {
+                            if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                                return '昵称不能有特殊字符';
+                            }
+                            if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                                return '昵称首尾不能出现下划线\'_\'';
+                            }
+                        }
+
+                    }
+                });
+                form.render()
+                form.on('submit(formDemo)', function (data) {
+                    var roleNum = $("#roleNum_m").val()
+                    var roleName = $("#roleName_m").val()
+                    var roleStatus = $('input:radio[name="status_m"]:checked').val();
+                    var roleStatusNum = 0
+                    //alert(roleStatus)
+                    if (roleStatus == "启用") {
+                        roleStatusNum = 1
+                    } else {
+                        roleStatusNum = 0
+                    }
+                    $.ajax({
+                        url: "modifyRole",
+                        data: {"isStart": roleStatusNum, "roleCode": roleNum, "roleName": roleName},
+                        datatype: "json",
+                        type: "get",
+                        success: function (json) {
+                            console.log(json)
+                        },
+                        error: function () {
+
+                        }
+                    })
+                    setTimeout(function () {
+                        layer.closeAll();
+                        window.location.href = window.location.href
+                    }, 500);
+                    //关闭信息框
+                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                });
+            }
+
         })
 
     });
@@ -339,6 +516,10 @@
         }
 
     })
+
+    //
+
+
 
 
 </script>

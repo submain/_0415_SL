@@ -63,5 +63,18 @@ public class Data_dictoryServiceImpl implements Data_dictoryService {
         return baseResp;
     }
 
+    @Override
+    public BaseResp getData_dictionaryById(Data_dictionary data_dictionary) {
+        BaseResp baseResp = new BaseResp();
+        Data_dictionary data_dictionary1 = data_dictionaryMapper.getData_dictionaryById(data_dictionary);
+        if (data_dictionary1!=null){
+            baseResp.setSuccess(1);
+            baseResp.setData(data_dictionary1);
+        }else {
+            baseResp.setSuccess(0);
+        }
+        return baseResp;
+    }
+
 
 }

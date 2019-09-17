@@ -68,6 +68,12 @@
 		select * from au_user where loginCode = #{loginCode} and password = #{password}
     </select>
 
+
+	<!-- 根据用户名查询用户 -->
+	<select id="getUserByLoginCode" resultType="user" parameterType="user">
+		select * from au_user where loginCode = #{loginCode}
+    </select>
+
 	<!-- 根据主键查询用户 -->
 	<select id="getUserById" resultType="user" parameterType="user">
 		select * from au_user where id = #{id}
@@ -166,7 +172,7 @@
 		select * from au_user 
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="userName != null">
-			 and userName like #{userName}
+			 and userName like CONCAT('%',#{userName},'%')
 			</if>
 			<if test="loginCode != null">
 			 and loginCode like #{loginCode}

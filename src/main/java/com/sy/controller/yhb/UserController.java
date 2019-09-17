@@ -100,6 +100,78 @@ public class UserController {
         }
         return baseResp;
     }
+    //修改用户
+    @RequestMapping("/statics/html/modifyUser")
+    @ResponseBody
+    public BaseResp modify(User user){
+         BaseResp baseResp = new BaseResp();
+         int result=userService.modifyUser(user);
+         if (result!=0){
+             baseResp.setSuccess(1);
+         }else {
+             baseResp.setSuccess(0);
+         }
+         return baseResp;
+    }
+    //获取被选中的用户信息
+    @RequestMapping("/statics/html/getUserSelected")
+    @ResponseBody
+    public BaseResp getUserSelected(Integer selectedId){
+        BaseResp baseResp = new BaseResp();
+        User user = new User();
+        user.setId(selectedId);
+        try {
+            User user1 = userService.getUserById(user);
+            if (user1!=null){
+                baseResp.setSuccess(1);
+                baseResp.setData(user1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baseResp;
+    }
+
+    //通过条件查找用户
+    @RequestMapping("/statics/html/getUserByKey")
+    @ResponseBody
+    public BaseResp getUserByKey(String key){
+        BaseResp baseResp = new BaseResp();
+        User user = new User();
+        user.setUserName(key);
+        try {
+            List<User> userList = userService.getUserListBySearch(user);
+            if (userList.size()!=0){
+                baseResp.setSuccess(1);
+                baseResp.setData(userList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baseResp;
+    }
+
+    //通过用户名查找用户
+    @RequestMapping("/statics/html/getUserLoginCode")
+    @ResponseBody
+    public BaseResp getUserByLoginCode(String loginCode){
+        System.out.println(loginCode);
+        BaseResp baseResp = new BaseResp();
+        User user = new User();
+        user.setLoginCode(loginCode);
+        try {
+            User user1 = userService.getUserByLoginCode(user);
+            if (user1!=null){
+                baseResp.setSuccess(1);
+                baseResp.setData(user1.getId());
+            }else {
+                baseResp.setSuccess(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baseResp;
+    }
 
 
 

@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService {
         }
         return baseResp;
     }
+
+    @Override
+    public User getUserByLoginCode(User user) throws Exception {
+        return mapper.getUserByLoginCode(user);
+    }
 }

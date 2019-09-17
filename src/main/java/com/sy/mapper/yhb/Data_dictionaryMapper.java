@@ -27,6 +27,13 @@ public interface Data_dictionaryMapper {
     public int deleteData_dictionaryById(Integer id);
 
     /**
+     * 查看商品
+     * @param
+     * @return
+     */
+    public Data_dictionary getData_dictionaryById(Data_dictionary data_dictionary);
+
+    /**
      * 新增商品
      * @param
      * @return

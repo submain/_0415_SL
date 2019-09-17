@@ -1,5 +1,7 @@
 package com.sy.model.yhb;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Goods_info {
@@ -14,6 +16,7 @@ public class Goods_info {
     private Integer num;
     private String unit;
     private Date createTime;
+    @JsonFormat(pattern ="yyyy-MM-dd ")
     private Date lastUpdateTime;
     private String createdBy;
     private Integer starNum;

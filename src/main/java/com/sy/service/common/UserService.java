@@ -87,4 +87,6 @@ public interface UserService {
      */
     public int loginCodeIsExit(User user) throws Exception;
     public BaseResp modifyUserStatus(Integer status,Integer id) throws Exception;
+
+    public User getUserByLoginCode(User user) throws Exception;
 }

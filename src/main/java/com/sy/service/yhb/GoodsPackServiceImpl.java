@@ -30,7 +30,7 @@ public class GoodsPackServiceImpl implements GoodsPackService {
     @Override
     public BaseResp getGoodsPackListBySearch(GoodsPack goodsPack) throws Exception {
         BaseResp baseResp = new BaseResp();
-        List<GoodsPack> goodsPackList = goodsPackMapper.getGoodsPackList(goodsPack);
+        List<GoodsPack> goodsPackList = goodsPackMapper.getGoodsPackListBySearch(goodsPack);
         Integer count = goodsPackMapper.count(goodsPack);
         if (goodsPackList.size()!=0){
             baseResp.setSuccess(1);

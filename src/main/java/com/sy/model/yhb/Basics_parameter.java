@@ -7,7 +7,25 @@ public class Basics_parameter {
     private String valued;
     private String description;
     private String dr;
+    private Integer starNum;
 
+    public Integer getStarNum() {
+        return starNum;
+    }
+
+    public void setStarNum(Integer starNum) {
+        this.starNum = starNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    private Integer pageSize;
     public Integer getId() {
         return id;
     }

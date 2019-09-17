@@ -74,6 +74,7 @@ public class Goods_infoServiceImpl implements Goods_infoService {
         Integer result = goods_infoMapper.modifyGoods_info(goods_info);
         if (result!=0){
             baseResp.setSuccess(1);
+
         }else {
             baseResp.setSuccess(0);
         }
